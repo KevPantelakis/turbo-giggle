@@ -169,7 +169,24 @@ void start_serial(struct account *ac) {
  * Démarrez tous les processus simultanément
  */
 void start_fork(struct account *ac) {
-    // TODO
+    int i = 0;
+    const int max = nr_ops(ops);
+    int pids[max];
+    for(i; i < max; ++i){
+        pids[i] = fork();
+        
+        if(pids[i] < 0){
+            fprintf(stderr, "Fork NO%d Failed\n", i);
+        }
+        else if(pids[i] != 0){
+            int status;
+            wait(&status);
+        }
+        else{
+            atm(&ops[i]);
+            exit(0);
+        }
+    }
 }
 
 /*
@@ -177,7 +194,15 @@ void start_fork(struct account *ac) {
  * Démarrez tous les fils d'exécution simultanément
  */
 void start_pthread(struct account *ac) {
-    // TODO
+    int i=0;
+    const int max = nr_ops(ops);
+    pthread_t tids[max];
+    
+    for(i;i< max; ++i)
+        pthread_create(&tids[i], NULL,atm,&ops[i]);
+    
+    for(i = 0;i < max; ++i)
+        pthread_join( tids[i], NULL);
 }
 
 /*
@@ -185,7 +210,17 @@ void start_pthread(struct account *ac) {
  * Démarrez tous les fils d'exécution simultanément
  */
 void start_pth(struct account *ac) {
-    // TODO
+    int i=0;
+    const int max = nr_ops(ops);
+    pth_init();
+    
+    pth_t tids[max];
+    
+    for(i;i< max; ++i)
+        tids[i] = pth_spawn(PTH_ATTR_DEFAULT,atm,&ops[i]);
+    
+    for(i = 0;i < max; ++i)
+        pth_join(tids[i], NULL);
 }
 
 /*
