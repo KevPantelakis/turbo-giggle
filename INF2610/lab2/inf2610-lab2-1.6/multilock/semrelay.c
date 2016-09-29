@@ -20,22 +20,20 @@ void *semrelay_worker(void * data) {
     struct experiment * e = data;
 
     for (i = 0; i < e->outer; i++) {
-        // TODO: attendre notre tour
+        sem_wait(e->lock);
         for (j = 0; j < e->inner; j++) {
             unsigned long idx = (i * e->inner) + j;
             statistics_add_sample(e->data, (double) idx);
         }
-        // TODO: signaler le travailleur suivant
+        sem_post(e->lock);
     }
     return NULL;
 }
 
 void semrelay_initialization(struct experiment * e) {
-    int i;
-
     e->data = make_statistics();
-    // TODO: allocation d'un tableau de sémaphores sem_t dans e->lock
-    // TODO: initialisation des sémaphores
+    e->lock = malloc(sizeof(sem_t));
+    sem_init(e->lock, 0, 1);
 }
 
 void semrelay_destroy(struct experiment * e) {
@@ -45,7 +43,7 @@ void semrelay_destroy(struct experiment * e) {
     statistics_copy(e->stats, e->data);
     free(e->data);
 
-    // TODO: destruction du verrou
-    // TODO: liberation de la memoire du verrou
+    sem_destroy(e->lock);
+    free(e->lock);
 }
 
