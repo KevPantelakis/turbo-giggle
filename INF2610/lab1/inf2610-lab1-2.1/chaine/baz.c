@@ -15,5 +15,10 @@
 int main(int argc, char **argv) {
 	increment_rank();
 	whoami("baz");
+	int nb = atoi(argv[1]);
+	nb--;
+	char buffer[20];
+	sprintf(buffer, "%d", nb);
+  	execlp("foo", "foo",buffer , NULL);
 	return 0;
 }
