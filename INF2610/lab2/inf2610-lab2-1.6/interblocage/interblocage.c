@@ -86,6 +86,8 @@ static void watchdog(int signr)
 {
     (void) signr;
     // TODO: Si un interblocage est detecte, alors faire appel a exit(0)
+    if(x != y)
+        exit(0);
     printf("watchdog\n");
 }
 
