@@ -110,11 +110,11 @@ main(int argc, char **argv) {
         printf("Fork error\n");
         break;
     case 0:
-        /*
-         * TODO: faire un appel à personality(),
-         * puis exécuter la commande passée en argument (voir vars->prog et vars->args).
-         * ATTENTION: bien s'assurer de traiter l'argument vars->dry_run
-         */
+
+        if(!vars->dry_run){
+            personality(ADDR_NO_RANDOMIZE);
+        }
+            execv(vars->prog,vars->args);
         break;
     default:
         wait(NULL);

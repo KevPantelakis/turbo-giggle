@@ -17,6 +17,15 @@
 void save_page(char *fname, void *ptr) {
     (void) fname;
     (void) ptr;
+
+    volatile char *adress = (int)ptr & 0xFFFFF000; (void) adress;
+    FILE *fd;
+    fd = fopen(fname,"w"); 
+    while (((int)adress & 0x00000FFF) != 0x00000FFF){
+            fprintf(fd, "%d %d \n" , adress, *adress);
+            adress++;
+    }
+    fclose(fd);
     /*
      * TODO:
      * 1 - calculer l'adresse du début de la page
@@ -56,6 +65,6 @@ int main(int argc, char **argv) {
     beef3[1] = 0xBEEF4444;
 
     save_page("beef.page", (void *)beef1);
-    save_page("cafe.page", (void *)&cafe1);
+    //save_page("cafe.page", (void *)&cafe1);
     return 0;
 }
