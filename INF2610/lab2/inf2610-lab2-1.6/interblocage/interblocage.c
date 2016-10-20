@@ -18,6 +18,7 @@
 
 volatile int x;
 volatile int y;
+volatile int w;
 
 pthread_mutex_t lock_one;
 pthread_mutex_t lock_two;
@@ -34,6 +35,7 @@ void random_hog()
     unsigned long count = random() / (1 << 20) + 10000;
     for (i = 0; i < count; i++)
         x++;
+    w = x-1; 
 }
 
 void * worker_foo(void *data)
@@ -43,7 +45,7 @@ void * worker_foo(void *data)
         pthread_mutex_lock(&lock_one);
         pthread_mutex_lock(&lock_two);
         // TODO: forcer l'interblocage avec la barriere
-        //pthread_barrier_wait(&barrier);
+        pthread_barrier_wait(&barrier);
         x = ++y;
         printf("foo %d\n", x);
         pthread_mutex_unlock(&lock_one);
@@ -59,7 +61,7 @@ void * worker_bar(void *data)
         pthread_mutex_lock(&lock_two);
         pthread_mutex_lock(&lock_one);
         // TODO: forcer l'interblocage avec la barriere
-        //pthread_barrier_wait(&barrier);
+        pthread_barrier_wait(&barrier);
         x = ++y;
         printf("bar %d\n", x);
         pthread_mutex_unlock(&lock_two);
@@ -84,11 +86,14 @@ void init_seed(void)
  */
 static void watchdog(int signr)
 {
+
     (void) signr;
-    // TODO: Si un interblocage est detecte, alors faire appel a exit(0)
-    if(x != y)
-        exit(0);
+    if(w != x)
+        w=x;
+    else
+	exit(0);	
     printf("watchdog\n");
+
 }
 
 /*

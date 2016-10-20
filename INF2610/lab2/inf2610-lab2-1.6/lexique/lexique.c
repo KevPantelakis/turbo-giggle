@@ -93,6 +93,9 @@ void handle_quit(int signum) {
     if (started) {
         // TODO: Envoyer un long == -1 sur fd_word_len pour que task_frequency()
         //       imprime les resultats
+	long *i = calloc(1, sizeof(long));
+	*i = -1;    
+	write(fd_word_len[WRITE], i, sizeof(long));
     }
     exit(0);
 }
@@ -102,8 +105,9 @@ int main(int argc, char **argv) {
     struct opts *opts = calloc(1, sizeof(struct opts));
     parse_opts(argc, argv, opts);
 
-    // TODO: Creation des tubes fd_word_len et fd_word_str avec pipe()
-
+    // Creation des tubes fd_word_len et fd_word_str avec pipe()
+    pipe(fd_word_len);
+    pipe(fd_word_str);
     /*
      * Demarrage de task_tokenize()
      */
@@ -114,20 +118,22 @@ int main(int argc, char **argv) {
         exit(0);
         break;
     case 0:
-        // TODO: Fermer les descripteurs de lecture
-        // TODO: Appel a task_tokenize(int stdin,
-        //                             int output_word_len,
-        //                             int output_word_str);
-        // TODO: Fermer les descripteurs d'ecriture
+fprintf(stderr, "fork failed\n");
+        // Fermer les descripteurs de lecture
+        close(fd_word_len[READ]);
+        close(fd_word_str[READ]);
+        task_tokenize(0, fd_word_len[WRITE], fd_word_str[WRITE]);
+        // Fermer les descripteurs d'ecriture
+        close(fd_word_len[WRITE]);
+        close(fd_word_str[WRITE]);
 
         fprintf(stderr, "task_tokenize done\n");
         exit(0);
         break;
     default:
-        // TODO: Fermer les descripteurs qui ne sont plus requis dans le parent
         break;
     }
-
+fprintf(stderr, "fork failed\n");
     /*
      * Demarrage de task_frequency()
      */
@@ -139,17 +145,23 @@ int main(int argc, char **argv) {
     case 0:
         // Desactivation de SIGINT
         signal(SIGINT, SIG_IGN);
-        // TODO: Fermer les descripteurs d'ecriture
-        // TODO: Appel a task_frequency(int input_word_len,
-        //                             int input_word_str,
-        //                             int stdout)
-        // TODO: Fermer les descripteurs de lecture
+        // Fermer les descripteurs d'ecriture
+        close(fd_word_len[WRITE]);
+        close(fd_word_str[WRITE]);
+        task_frequency(fd_word_len[READ], fd_word_str[READ], 1);
+        // Fermer les descripteurs de lecture
+        close(fd_word_len[READ]);
+        close(fd_word_str[READ]);
 
         fprintf(stderr, "task_frequency done\n");
         exit(0);
         break;
     default:
-        // TODO: Fermer les descripteurs qui ne sont plus requis dans le parent
+        // Fermer les descripteurs qui ne sont plus requis dans le parent
+        close(fd_word_len[READ]);
+        close(fd_word_str[READ]);
+        close(fd_word_len[WRITE]);
+        close(fd_word_str[WRITE]);
         break;
     }
 
