@@ -1,0 +1,86 @@
+-- Ce fichier vous permettra de peupler votre base de donnees
+-- pour lancer le fichier dans SQL Plus, SQL> @Y:/chemin/insertTP3.sql
+
+DROP TABLE Note;
+DROP TABLE Epreuve;
+DROP TABLE Inscription;
+DROP TABLE Section;
+DROP TABLE CoursTrim;
+DROP TABLE Prerequis;
+DROP TABLE Cours;
+DROP TABLE Personne;
+
+CREATE TABLE Personne
+(
+nas INTEGER CHECK(nas BETWEEN 000000000 and 999999999) PRIMARY KEY,
+nom VARCHAR(255) NOT NULL,
+prenom VARCHAR(255) NOT NULL,
+typPers CHAR(1) NOT NULL CHECK(typPers IN ('E','X','P')),
+matricule VARCHAR(20) UNIQUE,
+pmatricule  VARCHAR(20) UNIQUE
+);
+
+CREATE TABLE Cours(
+sigle VARCHAR(15) primary key,
+titre VARCHAR(50) NOT NULL,
+nbCredits INTEGER NOT NULL
+);
+
+CREATE TABLE Prerequis(
+sigle VARCHAR(15),
+lePrerequis VARCHAR(15),
+PRIMARY KEY (sigle,lePrerequis),
+FOREIGN KEY (lePrerequis) REFERENCES Cours(sigle),
+FOREIGN KEY (sigle) REFERENCES Cours(sigle)
+);
+
+CREATE TABLE CoursTrim(
+sigle VARCHAR(15),
+trim VARCHAR(5),
+responsable INTEGER,
+PRIMARY KEY (sigle,trim),
+FOREIGN KEY (sigle) REFERENCES Cours(sigle),
+FOREIGN KEY (responsable) REFERENCES Personne(nas)
+);
+
+CREATE TABLE Section(
+sigle VARCHAR(15),
+trim VARCHAR(5),
+numSect INTEGER,
+capacite INTEGER NOT NULL,
+enseignant INTEGER,
+PRIMARY KEY (sigle,trim,numSect),
+FOREIGN KEY (sigle,trim) REFERENCES CoursTrim(sigle,trim),
+FOREIGN KEY (enseignant) REFERENCES Personne(nas)
+);
+
+
+CREATE TABLE Inscription(
+sigle VARCHAR(15),
+trim VARCHAR(5),
+matricule VARCHAR(20),
+numSect INTEGER,
+cumulatif REAL CHECK(cumulatif BETWEEN 0 AND 20),
+noteFinale VARCHAR(3),
+PRIMARY KEY (sigle,trim,matricule),
+FOREIGN KEY (matricule) REFERENCES Personne(matricule),
+FOREIGN KEY (sigle,trim,numSect) REFERENCES Section(sigle,trim,numSect)
+);
+
+CREATE TABLE Epreuve(
+idEpr INTEGER PRIMARY KEY,
+sigle VARCHAR(15),
+trim VARCHAR(5),
+typEpr CHAR(2) CHECK(typEpr IN ('CP','EF','TP')),
+ponderation INTEGER CHECK(ponderation BETWEEN 0 and 100),
+FOREIGN KEY (sigle,trim) REFERENCES CoursTrim(sigle,trim)
+);
+
+CREATE TABLE Note(
+idEpr INTEGER,
+matricule VARCHAR(20),
+laNote REAL CHECK(laNote BETWEEN 0 AND 20),
+PRIMARY KEY (idEpr, matricule),
+FOREIGN KEY (idEpr) REFERENCES Epreuve(idEpr),
+FOREIGN KEY (matricule) REFERENCES Personne(matricule)
+);
