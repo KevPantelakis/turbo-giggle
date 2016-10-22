@@ -1,0 +1,10 @@
+SELECT * FROM COURS 
+  WHERE SIGLE = (
+      SELECT SIGLE FROM (
+            SELECT SIGLE,COUNT(MATRICULE) AS NBETUDIANTS FROM INSCRIPTION GROUP BY SIGLE
+                ) WHERE NBETUDIANTS = (
+                      SELECT MAX(NBETUDIANTS) FROM (
+                              SELECT SIGLE,COUNT(MATRICULE) AS NBETUDIANTS FROM INSCRIPTION GROUP BY SIGLE
+                                    )
+                          )
+                  );
