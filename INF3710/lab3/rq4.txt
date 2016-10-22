@@ -1,0 +1,10 @@
+SELECT * FROM PERSONNE
+  WHERE MATRICULE IN (
+      SELECT MATRICULE FROM (
+            SELECT MATRICULE, SOMME FROM (
+                    SELECT MATRICULE,SUM(NBCREDITS) AS SOMME FROM (
+                              SELECT * FROM COURS INNER JOIN INSCRIPTION ON COURS.SIGLE = INSCRIPTION.SIGLE
+                                      ) GROUP BY MATRICULE
+                                            ) WHERE SOMME >= 10
+                                                )
+        );
