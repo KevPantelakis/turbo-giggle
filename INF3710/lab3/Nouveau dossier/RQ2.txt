@@ -1,0 +1,7 @@
+SELECT LEPREREQUIS FROM PREREQUIS P WHERE P.SIGLE = 'INF3303'
+MINUS (SELECT sigle FROM INSCRIPTION I 
+        WHERE I.matricule = 
+          (
+            SELECT P.matricule FROM PERSONNE P 
+            WHERE P.nom ='Allard' AND P.prenom = 'Félix'
+          ));

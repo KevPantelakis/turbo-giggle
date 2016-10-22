@@ -1,0 +1,11 @@
+1. 
+SELECT * FROM COURS C 
+WHERE C.sigle IN 
+    (
+      SELECT sigle FROM INSCRIPTION I 
+        WHERE I.matricule = 
+          (
+            SELECT P.matricule FROM PERSONNE P 
+            WHERE P.nom ='Allard' AND P.prenom = 'Félix'
+          )
+    ) AND C.NBCREDITS >=3;
