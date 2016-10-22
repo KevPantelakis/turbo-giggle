@@ -13,7 +13,11 @@
 #include "whoami.h"
 
 int main(int argc, char **argv) {
-	increment_rank();
-	whoami("foo");
+
+	if(atoi(argv[1]) > 0){
+		increment_rank();
+		whoami("foo");
+       	 	execlp("bar", "bar", argv[1], NULL);
+	}
 	return 0;
 }

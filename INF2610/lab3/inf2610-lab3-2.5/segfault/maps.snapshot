@@ -1,0 +1,24 @@
+00400000-00401000 r-xp 00000000 00:2f 23335027                           /usagers/kepana/Bureau/deuxiemeAnnee/turbo-giggle/INF2610/lab3/inf2610-lab3-2.5/segfault/segfault
+00601000-00602000 r--p 00001000 00:2f 23335027                           /usagers/kepana/Bureau/deuxiemeAnnee/turbo-giggle/INF2610/lab3/inf2610-lab3-2.5/segfault/segfault
+00602000-00603000 rw-p 00002000 00:2f 23335027                           /usagers/kepana/Bureau/deuxiemeAnnee/turbo-giggle/INF2610/lab3/inf2610-lab3-2.5/segfault/segfault
+00e65000-00f0a000 rw-p 00000000 00:00 0                                  [heap]
+7fcb49d45000-7fcb49efe000 r-xp 00000000 08:04 1744890                    /usr/lib64/libc-2.23.so
+7fcb49efe000-7fcb4a0fd000 ---p 001b9000 08:04 1744890                    /usr/lib64/libc-2.23.so
+7fcb4a0fd000-7fcb4a101000 r--p 001b8000 08:04 1744890                    /usr/lib64/libc-2.23.so
+7fcb4a101000-7fcb4a103000 rw-p 001bc000 08:04 1744890                    /usr/lib64/libc-2.23.so
+7fcb4a103000-7fcb4a107000 rw-p 00000000 00:00 0 
+7fcb4a107000-7fcb4a11e000 r-xp 00000000 08:04 1748323                    /usr/lib64/libpthread-2.23.so
+7fcb4a11e000-7fcb4a31d000 ---p 00017000 08:04 1748323                    /usr/lib64/libpthread-2.23.so
+7fcb4a31d000-7fcb4a31e000 r--p 00016000 08:04 1748323                    /usr/lib64/libpthread-2.23.so
+7fcb4a31e000-7fcb4a31f000 rw-p 00017000 08:04 1748323                    /usr/lib64/libpthread-2.23.so
+7fcb4a31f000-7fcb4a323000 rw-p 00000000 00:00 0 
+7fcb4a323000-7fcb4a347000 r-xp 00000000 08:04 1747514                    /usr/lib64/ld-2.23.so
+7fcb4a4e8000-7fcb4a4eb000 rw-p 00000000 00:00 0 
+7fcb4a545000-7fcb4a546000 rw-p 00000000 00:00 0 
+7fcb4a546000-7fcb4a547000 r--p 00023000 08:04 1747514                    /usr/lib64/ld-2.23.so
+7fcb4a547000-7fcb4a548000 rw-p 00024000 08:04 1747514                    /usr/lib64/ld-2.23.so
+7fcb4a548000-7fcb4a549000 rw-p 00000000 00:00 0 
+7fff832d8000-7fff832f9000 rw-p 00000000 00:00 0                          [stack]
+7fff83360000-7fff83363000 r--p 00000000 00:00 0                          [vvar]
+7fff83363000-7fff83365000 r-xp 00000000 00:00 0                          [vdso]
+ffffffffff600000-ffffffffff601000 r-xp 00000000 00:00 0                  [vsyscall]

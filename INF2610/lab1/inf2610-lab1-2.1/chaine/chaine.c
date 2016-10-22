@@ -23,7 +23,7 @@ int main(int argc, char **argv) {
 	if (argc == 2) {
 	    n = atoi(argv[1]);
 	}
-
+	
 	// ajoute le répertoire courant dans $PATH
 	add_pwd_to_path(argv[0]);
 
@@ -31,11 +31,9 @@ int main(int argc, char **argv) {
 	whoami("chaine");
 
 	// Exécution de n cycles foo bar baz
-	int i;
-	for (i = 0; i < n; i++) {
-            execlp("foo", "foo", NULL);
-            execlp("bar", "bar", NULL);
-            execlp("baz", "baz", NULL);
-	}
+	char buffer[20];
+	sprintf(buffer,"%d",n);
+        execlp("foo", "foo", buffer, NULL);
+
 	return 0;
 }
