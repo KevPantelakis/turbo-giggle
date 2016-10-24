@@ -1,12 +1,12 @@
 3.
-SELECT * FROM PERSONNE P
+SELECT nom,prenom FROM PERSONNE P
   WHERE P.MATRICULE IN 
   (
     SELECT matricule FROM INSCRIPTION I 
       WHERE I.trim = '16-3'
   ) MINUS 
   (
-    SELECT * FROM PERSONNE P 
+    SELECT nom,prenom FROM PERSONNE P 
       WHERE P.MATRICULE IN 
         (
           SELECT matricule FROM INSCRIPTION I 
