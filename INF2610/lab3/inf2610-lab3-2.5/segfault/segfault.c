@@ -68,8 +68,7 @@ void scan_memory(void *data, int direction) {
      */
 
     while(1){
-        offset += direction;
-        addr = start + offset;
+        addr = start + (++offset * direction);
         __sync_synchronize();
         bidon = *addr;
     }
