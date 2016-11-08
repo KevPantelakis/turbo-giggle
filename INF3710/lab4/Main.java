@@ -2,9 +2,44 @@ import java.sql.*;
 import java.util.Scanner;
 import java.util.StringJoiner;
 import java.util.TimeZone;
+import java.util.Vector;
+
 
 public class Main {
 
+    public static String stringFill(String targetString,char filling, int repetition){
+        for (int j = 0; j < repetition; j++) {
+            targetString += filling;
+        }
+        return targetString;
+    }
+    public static String formatString(Vector<String> vec){
+        String formatedString = "|";
+        int stringLen = 0;
+        int repetition = 0;
+        for (String i:vec) {
+            stringLen = i.length();
+            repetition = (30 - stringLen)/2;
+            //formatedString += "|";
+            if((30 - stringLen) % 2 == 0){
+                formatedString = stringFill(formatedString,' ',repetition );
+                formatedString += i;
+                formatedString = stringFill(formatedString,' ',repetition );
+
+            }
+            else{
+                formatedString = stringFill(formatedString,' ',repetition + 1);
+                formatedString += i;
+                formatedString = stringFill(formatedString,' ',repetition);
+            }
+            formatedString += "|";
+        }
+        return formatedString;
+    }
+    public static void executeChoice(int choice){
+
+
+    }
     public static void main(String[] args) {
         Connection connexion= null;
         try {
@@ -21,37 +56,50 @@ public class Main {
             System.out.print("Entrer votre matricule \n~$> ");
             matricule = scanner.nextLine();
 
-            System.out.print("\nChoisissez parmis les options suivantes :\n\t(1) Affichage du choix de cours courrant\n\t(2) Suppression d'un cours\n\t(3) Ajout d'un cours\n\t(4) Validation\n~$>");
+            System.out.print("\nChoisissez parmis les options suivantes :\n\t(1) Affichage du choix de cours courant\n\t(2) Suppression d'un cours\n\t(3) Ajout d'un cours\n\t(4) Validation\n\t(5) Quitter\n~$>");
             choice = scanner.nextInt();
 
             Statement makeJavaGreatAgain = connexion.createStatement();
             ResultSet rset;
-            String req;
-            switch (choice){
-                case 1:
-                    req = "SELECT DISTINCT C.TITRE,P.NOM,P.PRENOM,I.SIGLE,I.NUMSECT FROM COURS C,PERSONNE P, COURSTRIM CT, INSCRIPTION I WHERE C.SIGLE = I.SIGLE AND C.SIGLE = CT.SIGLE AND I.TRIM = '16-3' AND P.NAS = CT.RESPONSABLE AND I.MATRICULE = " + matricule;
-                    rset = makeJavaGreatAgain.executeQuery(req);
-                    System.out.println("CHOIX DE COURS SESSION AUTOMNE 2016");
-                    System.out.println("-----------------------------------------------------------------------------------------------------------------------------");
-                    System.out.println("|            SIGLE             |             TITRE            |      NUMERO DE SECTION       |     RESPONSABLE DU COURS     |");
-                    System.out.println("-----------------------------------------------------------------------------------------------------------------------------");
-                    while ( rset.next() ) {
-                        String sigle = rset.getString("sigle");
-                        String titre = rset.getString("titre");
-                        String numsect = rset.getString("numsect");
-                        String nom = rset.getString("nom") + " " + rset.getString("prenom");
-                        System.out.println("| " + sigle + " | " + titre + " | " + numsect + " | "+ nom + " |");
-                    }
-                    rset.close();
-                    break;
-                case 2:
-                    break;
-                case 3:
-                    break;
-                case 4:
-                    break;
-            }
+            String req, resultat;
+            Vector<String> vecS = new Vector<>();
+            while (choice !=5) {
+                switch (choice) {
+                    case 1:
+                        System.out.println("Vous avez choisis: Affichage du choix de cours courant");
+                        req = "SELECT DISTINCT C.TITRE,P.NOM,P.PRENOM,I.SIGLE,I.NUMSECT FROM COURS C,PERSONNE P, COURSTRIM CT, INSCRIPTION I WHERE C.SIGLE = I.SIGLE AND C.SIGLE = CT.SIGLE AND I.TRIM = '16-3' AND P.NAS = CT.RESPONSABLE AND I.MATRICULE = " + matricule;
+                        rset = makeJavaGreatAgain.executeQuery(req);
+                        System.out.println("CHOIX DE COURS SESSION AUTOMNE 2016");
+                        System.out.println("-----------------------------------------------------------------------------------------------------------------------------");
+                        System.out.println("|            SIGLE             |             TITRE            |      NUMERO DE SECTION       |     RESPONSABLE DU COURS     |");
+                        System.out.println("-----------------------------------------------------------------------------------------------------------------------------");
+                        while (rset.next()) {
+                            vecS.add(rset.getString("sigle"));
+                            vecS.add(rset.getString("titre"));
+                            vecS.add(rset.getString("numsect"));
+                            vecS.add(rset.getString("prenom") + " " + rset.getString("nom"));
+                            System.out.println(formatString(vecS));
+                            vecS.clear();
+                        }
+                        System.out.println("-----------------------------------------------------------------------------------------------------------------------------");
+                        rset.close();
+                        break;
+                    case 2:
+                        System.out.println("Vous avez choisis: Suppression d'un cours\n~$>");
+                        String sigle = scanner.nextLine();
+                        req = "DELETE FROM INSCRIPTION I WHERE I.MATRICULE = " + matricule + " AND I.SIGLE = " + sigle + " AND I.TRIM='16-3'";
+                        rset = makeJavaGreatAgain.executeQuery(req);
+                        rset.close();
+                        break;
+                    case 3:
+                        break;
+                    case 4:
+                        break;
 
+                }
+                System.out.print("\nChoisissez parmis les options suivantes :\n\t(1) Affichage du choix de cours courant\n\t(2) Suppression d'un cours\n\t(3) Ajout d'un cours\n\t(4) Validation\n\t(5) Quitter\n~$>");
+                choice = scanner.nextInt();
+            }
             makeJavaGreatAgain.close();
 
 
