@@ -36,10 +36,7 @@ public class Main {
         }
         return formatedString;
     }
-    public static void executeChoice(int choice){
 
-
-    }
     public static void main(String[] args) {
         Connection connexion= null;
         try {
@@ -61,13 +58,13 @@ public class Main {
 
             Statement makeJavaGreatAgain = connexion.createStatement();
             ResultSet rset;
-            String req, resultat;
+            String req;
             Vector<String> vecS = new Vector<>();
             while (choice !=5) {
                 switch (choice) {
                     case 1:
                         System.out.println("Vous avez choisis: Affichage du choix de cours courant");
-                        req = "SELECT DISTINCT C.TITRE,P.NOM,P.PRENOM,I.SIGLE,I.NUMSECT FROM COURS C,PERSONNE P, COURSTRIM CT, INSCRIPTION I WHERE C.SIGLE = I.SIGLE AND C.SIGLE = CT.SIGLE AND I.TRIM = '16-3' AND P.NAS = CT.RESPONSABLE AND I.MATRICULE = " + matricule;
+                        req ="WITH T AS (SELECT DISTINCT C.TITRE,CT.RESPONSABLE,I.SIGLE,I.NUMSECT FROM COURS C, COURSTRIM CT, INSCRIPTION I WHERE (C.SIGLE = I.SIGLE AND C.SIGLE = CT.SIGLE AND I.TRIM = '16-3' AND I.MATRICULE = " + matricule +" )) select T.SIGLE, T.TITRE, T.NUMSECT, P.PRENOM, P.NOM FROM T LEFT JOIN PERSONNE P on (T.RESPONSABLE = P.NAS)";
                         rset = makeJavaGreatAgain.executeQuery(req);
                         System.out.println("CHOIX DE COURS SESSION AUTOMNE 2016");
                         System.out.println("-----------------------------------------------------------------------------------------------------------------------------");
@@ -94,6 +91,7 @@ public class Main {
                     case 3:
                         break;
                     case 4:
+                        connexion.commit();
                         break;
 
                 }
@@ -101,7 +99,7 @@ public class Main {
                 choice = scanner.nextInt();
             }
             makeJavaGreatAgain.close();
-
+            connexion.close();
 
         }
         catch(ClassNotFoundException ex) {
