@@ -15,23 +15,22 @@ public class Main {
     }
     public static String formatString(Vector<String> vec){
         String formatedString = "|";
-        int stringLen = 0;
-        int repetition = 0;
+        int stringLen;
+        int repetition;
         for (String i:vec) {
+            if(i.length() >30){
+                i= i.substring(0, 29) + ".";
+            }
             stringLen = i.length();
             repetition = (30 - stringLen)/2;
-            //formatedString += "|";
             if((30 - stringLen) % 2 == 0){
                 formatedString = stringFill(formatedString,' ',repetition );
-                formatedString += i;
-                formatedString = stringFill(formatedString,' ',repetition );
-
             }
             else{
                 formatedString = stringFill(formatedString,' ',repetition + 1);
-                formatedString += i;
-                formatedString = stringFill(formatedString,' ',repetition);
             }
+            formatedString += i;
+            formatedString = stringFill(formatedString,' ',repetition);
             formatedString += "|";
         }
         return formatedString;
@@ -46,64 +45,140 @@ public class Main {
             connexion = DriverManager.getConnection("jdbc:oracle:thin:@//ora-labos.labos.polymtl.ca:2001/labos", "INF3710-163-21","9WM6RV");
             System.out.println("Connected!");
 
-            Scanner scanner = new Scanner(System.in);
+            /* variables*/
+            Scanner scanner = new Scanner(System.in); //lire le stdin
             String matricule;
+            String sigle;
+            String cours;
             int choice;
+            Statement makeJavaGreatAgain = connexion.createStatement();
+            ResultSet queryResults;
+            String query;
+            Vector<String> vecS = new Vector<>();
 
             System.out.print("Entrer votre matricule \n~$> ");
-            matricule = scanner.nextLine();
+            matricule = scanner.next();
 
-            System.out.print("\nChoisissez parmis les options suivantes :\n\t(1) Affichage du choix de cours courant\n\t(2) Suppression d'un cours\n\t(3) Ajout d'un cours\n\t(4) Validation\n\t(5) Quitter\n~$>");
-            choice = scanner.nextInt();
-
-            Statement makeJavaGreatAgain = connexion.createStatement();
-            ResultSet rset;
-            String req;
-            Vector<String> vecS = new Vector<>();
-            while (choice !=5) {
+            boolean cont=true;
+            while (cont) {
+                System.out.print("\nChoisissez parmis les options suivantes :\n\t(1) Affichage du choix de cours courant\n\t(2) Suppression d'un cours\n\t(3) Ajout d'un cours\n\t(4) Validation\n\t(5) Quitter\n~$>");
+                choice = scanner.nextInt();
                 switch (choice) {
+
+                    //Affichage du choix de cours courrant
                     case 1:
-                        System.out.println("Vous avez choisis: Affichage du choix de cours courant");
-                        req ="WITH T AS (SELECT DISTINCT C.TITRE,CT.RESPONSABLE,I.SIGLE,I.NUMSECT FROM COURS C, COURSTRIM CT, INSCRIPTION I WHERE (C.SIGLE = I.SIGLE AND C.SIGLE = CT.SIGLE AND I.TRIM = '16-3' AND I.MATRICULE = " + matricule +" )) select T.SIGLE, T.TITRE, T.NUMSECT, P.PRENOM, P.NOM FROM T LEFT JOIN PERSONNE P on (T.RESPONSABLE = P.NAS)";
-                        rset = makeJavaGreatAgain.executeQuery(req);
+                        query = "WITH T AS (SELECT DISTINCT C.TITRE,CT.RESPONSABLE,I.SIGLE,I.NUMSECT FROM COURS C,COURSTRIM CT,INSCRIPTION I WHERE (C.SIGLE = I.SIGLE AND C.SIGLE = CT.SIGLE AND I.TRIM = '16-3' AND I.MATRICULE = " + matricule +" )) select T.SIGLE, T.TITRE, T.NUMSECT, P.PRENOM, P.NOM FROM T LEFT JOIN PERSONNE P on (T.RESPONSABLE = P.NAS)";
+                        queryResults = makeJavaGreatAgain.executeQuery(query);
                         System.out.println("CHOIX DE COURS SESSION AUTOMNE 2016");
-                        System.out.println("-----------------------------------------------------------------------------------------------------------------------------");
+                        System.out.println(stringFill("",'-',125));
                         System.out.println("|            SIGLE             |             TITRE            |      NUMERO DE SECTION       |     RESPONSABLE DU COURS     |");
-                        System.out.println("-----------------------------------------------------------------------------------------------------------------------------");
-                        while (rset.next()) {
-                            vecS.add(rset.getString("sigle"));
-                            vecS.add(rset.getString("titre"));
-                            vecS.add(rset.getString("numsect"));
-                            vecS.add(rset.getString("prenom") + " " + rset.getString("nom"));
+                        System.out.println(stringFill("",'-',125));
+                        while (queryResults.next()) {
+                            vecS.add(queryResults.getString("sigle"));
+                            vecS.add(queryResults.getString("titre"));
+                            vecS.add(queryResults.getString("numsect"));
+                            vecS.add(queryResults.getString("prenom") + " " + queryResults.getString("nom"));
                             System.out.println(formatString(vecS));
                             vecS.clear();
                         }
                         System.out.println("-----------------------------------------------------------------------------------------------------------------------------");
-                        rset.close();
+                        queryResults.close();
                         break;
+
+                    //Suppression d'un cours
                     case 2:
-                        System.out.println("Vous avez choisis: Suppression d'un cours\n~$>");
-                        String sigle = scanner.nextLine();
-                        req = "DELETE FROM INSCRIPTION I WHERE I.MATRICULE = " + matricule + " AND I.SIGLE = " + sigle + " AND I.TRIM='16-3'";
-                        rset = makeJavaGreatAgain.executeQuery(req);
-                        rset.close();
+                        System.out.println("Vous avez choisi: Suppression d'un cours.\nVeuillez entrer le sigle du cours à retirer: \n~$>");
+                        sigle = scanner.next();
+
+                        /*
+                        Vérifier si le sigle est valide
+                        si oui, mettre le sigle et le nom du cours dans la variable cours
+                        si non, annuler l'opération avec un message d'erreur
+                        */
+                        query = "SELECT DISTINCT C.TITRE FROM COURS C WHERE C.SIGLE = '" + sigle + "'";
+                        queryResults = makeJavaGreatAgain.executeQuery(query);
+                        if(queryResults.next()) {
+                            cours = sigle + ": " + queryResults.getString("TITRE");
+                        }
+                        else {
+                            System.out.println(sigle + " n'est pas un sigle valide, la suppression de cours a été annulée. \n");
+                            break;
+                        }
+                        /*
+                        Vérifier si le cours figure dans le choix de cours de l'étudiant
+                        si oui, confirmer la suppression
+                        si non, annuler l'opération avec un message d'erreur
+                        */
+                        query = "SELECT I.SIGLE FROM INSCRIPTION I WHERE I.TRIM = '16-3' AND I.MATRICULE  = '" + matricule + "' AND I.SIGLE = '" + sigle + "'";
+                        queryResults = makeJavaGreatAgain.executeQuery(query);
+                        if (queryResults.next())
+                        {
+
+                            //Si on confirme, on supprime le cours de l'inscription
+                            //Si on annule, on quitte l'opération avec un message
+                            System.out.println("Voulez-vous vraiment supprimer le cours? "+ cours +"\n\t(1) oui\n\t(2) non\n~$> ");
+                            choice = scanner.nextInt();
+                            if(choice == 1) {
+                                query = "DELETE FROM INSCRIPTION I WHERE I.TRIM = '16-3' AND I.MATRICULE = '" + matricule + "' AND I.SIGLE = '" + sigle + "'";
+                                makeJavaGreatAgain.executeQuery(query);
+                                queryResults.close();
+                                System.out.println("Le cours " + cours + ", à été supprimé avec succès.\n");
+                            }
+                            else{
+                                System.out.println("Le cours " + cours + " n'a pas été supprimé.\n");
+                            }
+                        }
+                        else {
+                            System.out.println("Le cours " + cours + " ne peut pas être supprimé, car il n'est pas dans votre choix de cours.\n");
+                        }
                         break;
+
+                    // Ajout d'un cours
                     case 3:
+                        /*
+                        TODO
+                        VÉRIFIER SI LE COURS SE DONNE AU TRIMESTRE 16-3,
+                        VÉRIFIER SI LE COURS A DES PRÉREQUIS,
+                        VÉRIFIER SI L'ÉTUDIANT A LES PRÉREQUIS NÉCÉSSAIRE,
+                        AJOUTER LE COURS,
+                        ANNULER L'OPÉRATION,
+                        */
+                        System.out.println("Vous avez choisi: Ajout d'un cours.\nVeuillez entrer le sigle du cours à ajouter. \n~$>");
+                        sigle = scanner.next();
+
+                        /*
+                        Vérifier si le sigle est valide
+                        si oui, mettre le sigle et le nom du cours dans la variable cours
+                        si non, annuler l'opération avec un message d'erreur
+                        */
+                        query = "SELECT DISTINCT C.TITRE FROM COURS C WHERE C.SIGLE = '" + sigle + "'";
+                        queryResults = makeJavaGreatAgain.executeQuery(query);
+                        if(queryResults.next()) {
+                            cours = sigle + ": " + queryResults.getString("TITRE");
+                        }
+                        else {
+                            System.out.println(sigle + " n'est pas un sigle valide, l'ajout de cours a été annulée \n");
+                            break;
+                        }
                         break;
+
+                    // Validation
                     case 4:
                         connexion.commit();
                         break;
 
+                    // Quitter
+                    case 5:
+                        cont = false;
+                        break;
                 }
-                System.out.print("\nChoisissez parmis les options suivantes :\n\t(1) Affichage du choix de cours courant\n\t(2) Suppression d'un cours\n\t(3) Ajout d'un cours\n\t(4) Validation\n\t(5) Quitter\n~$>");
-                choice = scanner.nextInt();
             }
             makeJavaGreatAgain.close();
             connexion.close();
 
         }
         catch(ClassNotFoundException ex) {
-            System.out.println("Pilote JDBC non trouve" + ex.getMessage());
+            System.out.println("Pilote JDBC non trouvé" + ex.getMessage());
         }
         catch(SQLException ex) {
             System.out.println("Connexion impossible" + ex.getMessage());
