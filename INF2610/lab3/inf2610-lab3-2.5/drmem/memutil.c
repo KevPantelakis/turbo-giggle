@@ -130,11 +130,12 @@ static unsigned long tos;
 
 #define grow_stack_generic(name, size) \
 void _grow_stack_##name(memutil_opts_t *opts, int depth) { \
-    char buf[size]; \
     do_sleep(opts); \
+    char buf[size]; \
+    opts->data[depth - 1] = buf; \
+    --depth; \
     if (depth > 0) { \
-        opts->data[depth - 1] = buf; \
-        _grow_stack_##name(opts, --depth); \
+    _grow_stack_##name(opts, depth); \
     } else { \
         if (opts->verbose) { \
             register unsigned long rsp asm("rsp"); \
@@ -144,7 +145,7 @@ void _grow_stack_##name(memutil_opts_t *opts, int depth) { \
         if (opts->fill) { \
             int i; \
             for (i = 0; i < opts->data_len; i++) { \
-                fill(opts->data[i], sizeof(buf)); \
+                fill(opts->data[i], size); \
                 do_sleep(opts); \
             } \
         } \
