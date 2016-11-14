@@ -8,6 +8,9 @@ import java.util.stream.StreamSupport;
 
 public class Main {
 
+    public final static String nomUtilisateur = "INF3710-163-21";
+    public final static String password = "9WM6RV";
+
     public static String stringFill(String targetString,char filling, int repetition){
         for (int j = 0; j < repetition; j++) {
             targetString += filling;
@@ -43,7 +46,7 @@ public class Main {
             TimeZone timeZone = TimeZone.getTimeZone("Montreal");
             TimeZone.setDefault(timeZone);
             Class.forName("oracle.jdbc.OracleDriver");
-            connexion = DriverManager.getConnection("jdbc:oracle:thin:@//ora-labos.labos.polymtl.ca:2001/labos", "INF3710-163-21","9WM6RV");
+            connexion = DriverManager.getConnection("jdbc:oracle:thin:@//ora-labos.labos.polymtl.ca:2001/labos", nomUtilisateur,password);
             System.out.println("Connected!");
 
             /* variables*/
@@ -51,8 +54,10 @@ public class Main {
             String matricule;
             String sigle;
             String cours;
+            int nbCredits;
             int choice;
             Statement makeJavaGreatAgain = connexion.createStatement();
+            connexion.setAutoCommit(false);
             ResultSet queryResults;
             String query;
             Vector<String> vecS = new Vector<>();
@@ -62,7 +67,7 @@ public class Main {
 
             boolean cont=true;
             while (cont) {
-                System.out.print("\nChoisissez parmis les options suivantes :\n\t(1) Affichage du choix de cours courant\n\t(2) Suppression d'un cours\n\t(3) Ajout d'un cours\n\t(4) Validation\n\t(5) Quitter\n~$>");
+                System.out.print("Choisissez parmis les options suivantes :\n\t(1) Affichage du choix de cours courant\n\t(2) Suppression d'un cours\n\t(3) Ajout d'un cours\n\t(4) Validation\n\t(5) Quitter\n~$>");
                 choice = scanner.nextInt();
                 switch (choice) {
 
@@ -102,7 +107,7 @@ public class Main {
                             cours = sigle + ": " + queryResults.getString("TITRE");
                         }
                         else {
-                            System.out.println(sigle + " n'est pas un sigle valide, la suppression de cours a été annulée. \n");
+                            System.out.println(sigle + " n'est pas un sigle valide, la suppression de cours a été annulée.");
                             queryResults.close();
                             break;
                         }
@@ -123,14 +128,14 @@ public class Main {
                             if(choice == 1) {
                                 query = "DELETE FROM INSCRIPTION I WHERE I.TRIM = '16-3' AND I.MATRICULE = '" + matricule + "' AND I.SIGLE = '" + sigle + "'";
                                 makeJavaGreatAgain.executeQuery(query);
-                                System.out.println("Le cours " + cours + ", à été supprimé avec succès.\n");
+                                System.out.println("Le cours " + cours + ", à été supprimé avec succès.");
                             }
                             else{
-                                System.out.println("Le cours " + cours + " n'a pas été supprimé.\n");
+                                System.out.println("Le cours " + cours + " n'a pas été supprimé.");
                             }
                         }
                         else {
-                            System.out.println("Le cours " + cours + " ne peut pas être supprimé, car il n'est pas dans votre choix de cours.\n");
+                            System.out.println("Le cours " + cours + " ne peut pas être supprimé, car il n'est pas dans votre choix de cours.");
                         }
                         queryResults.close();
                         break;
@@ -142,7 +147,7 @@ public class Main {
                         VÉRIFIER SI LE COURS SE DONNE AU TRIMESTRE 16-3,
                         AJOUTER LE COURS
                         */
-                        System.out.println("Vous avez choisi: Ajout d'un cours.\nVeuillez entrer le sigle du cours à ajouter. \n"+ "~$>");
+                        System.out.println("Vous avez choisi: Ajout d'un cours.\nVeuillez entrer le sigle du cours à ajouter. \n~$>");
                         sigle = scanner.next();
 
                         /*
@@ -152,22 +157,36 @@ public class Main {
                         */
                         query = "SELECT DISTINCT C.TITRE FROM COURS C WHERE C.SIGLE = '" + sigle + "'";
                         queryResults = makeJavaGreatAgain.executeQuery(query);
-                        if(queryResults.next()) {
-                            cours = sigle + ": " + queryResults.getString("TITRE");
-                        }
-                        else {
-                            System.out.println(sigle + " n'est pas un sigle valide, l'ajout de cours a été annulée \n");
+                        if(!queryResults.next()) {
+                            System.out.println(sigle + " n'est pas un sigle valide, l'ajout de cours a été annulée");
                             queryResults.close();
                             break;
                         }
-                        // Vérifier si le cours ce donne au trimestre 16-3
 
+                        cours = sigle + ": " + queryResults.getString("TITRE");
+
+                        // Vérifier si le cours est déjà dans le choix de cours.
+                        query = "SELECT I.MATRICULE FROM INSCRIPTION I WHERE I.TRIM = '16-3' AND I.MATRICULE = '" + matricule + "' AND I.SIGLE = '" + sigle + "'";
+                        queryResults = makeJavaGreatAgain.executeQuery(query);
+                        if (queryResults.next()){
+                            System.out.println("Inutile d'ajouter le cours " + cours +", car le cours est déjà dans votre choix de cours" );
+                            break;
+                        }
+
+                        // Vérifier si le cours ce donne au trimestre 16-3
+                        query = "SELECT CT.SIGLE FROM COURSTRIM CT WHERE CT.SIGLE = '" +sigle+ "' AND CT.TRIM = '16-3'";
+                        queryResults = makeJavaGreatAgain.executeQuery(query);
+                        if(!queryResults.next()){
+                            queryResults.close();
+                            System.out.println("Impossible d'ajouter le cours " + cours +", car le cours n'est pas donné à la session d'hiver 2016." );
+                            break;
+                        }
 
                         //Vérifier si l'étudiant possède tout les prérequis pour faire le cours
                         query = "SELECT LEPREREQUIS FROM PREREQUIS PR WHERE PR.SIGLE = '" + sigle + "' AND LEPREREQUIS NOT IN (SELECT SIGLE FROM INSCRIPTION I WHERE I.MATRICULE = '"+matricule+"' AND TRIM <> '16-3')";
                         queryResults = makeJavaGreatAgain.executeQuery(query);
                         if(queryResults.next()){
-                            System.out.println("Impossible d'ajouter le cours " + cours +", car il vous manque le(s) cours suivant(s):\t" );
+                            System.out.println("Impossible d'ajouter le cours " + cours +", car il vous manque le(s) cours suivant(s):" );
                             do {
                                 System.out.println("\t"+ queryResults.getString("LEPREREQUIS"));
                             }
@@ -176,13 +195,35 @@ public class Main {
                             break;
                         }
 
-                        //Ajouter le cours aux choix de cours
-
+                        query = "INSERT INTO INSCRIPTION (sigle, trim, matricule, numSect, cumulatif, noteFinale) VALUES ('"+sigle+"', '16-3', '"+matricule+"', 1, NULL , NULL)";
+                        queryResults = makeJavaGreatAgain.executeQuery(query);
+                        System.out.println("Le cours "+ cours + ", à bien été ajouté a votre choix de cours.");
+                        queryResults.close();
                         break;
 
                     // Validation
                     case 4:
-                        connexion.commit();
+
+                        // Vérifier si l'étudiant a choisi entre 9 et 15 crédits
+                        // Si oui, on update la base de données
+                        // Si non, on roolback au dernier commit et on ignore les modifications faites durant la session.
+                        query = "SELECT SUM(C.NBCREDITS) AS SUMCREDITS FROM COURS C, INSCRIPTION I WHERE I.TRIM = '16-3' AND I.SIGLE = C.SIGLE AND I.MATRICULE = '" + matricule + "'";
+                        queryResults = makeJavaGreatAgain.executeQuery(query);
+                        if(queryResults.next()){
+                            nbCredits = queryResults.getInt("SUMCREDITS");
+
+                            if(nbCredits >= 9 && nbCredits <= 15){
+                                System.out.println("Vous avez validé votre choix de cours pour la prochaine session.");
+                                System.out.println("Vous aurez donc"+ nbCredits + " à votre prochaine session.");
+                                connexion.commit();
+                            }
+                            else{
+                                System.out.println("Vous n'avez pas choisi assez de crédits, vous devez choisir entre 9 et 15 crédits.");
+                                System.out.println("\tVous avez selectionné " + nbCredits + " crédits.");
+                                connexion.rollback();
+                            }
+                            queryResults.close();
+                        }
                         break;
 
                     // Quitter
@@ -193,7 +234,6 @@ public class Main {
             }
             makeJavaGreatAgain.close();
             connexion.close();
-
         }
         catch(ClassNotFoundException ex) {
             System.out.println("Pilote JDBC non trouvé" + ex.getMessage());
@@ -204,7 +244,3 @@ public class Main {
         }
     }
 }
-
-
-//    Statement monSelect = maConnexion.createStatement(); ResultSet resSelect = monSelect.executeQuery
-//        ("SELECT cid, cname, city FROM Customers");
