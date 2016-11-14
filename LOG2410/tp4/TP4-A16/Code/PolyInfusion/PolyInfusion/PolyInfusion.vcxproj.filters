@@ -1,0 +1,147 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Header Files\Machine">
+      <UniqueIdentifier>{2e70f764-2fcf-4046-8e2a-84e4b19f0699}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\CircuitLiquide">
+      <UniqueIdentifier>{c11b81cf-1d9a-42ed-8cca-23bb55273815}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\CircuitSolide">
+      <UniqueIdentifier>{a940f470-5150-423a-a6de-2e0386da6310}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Machine">
+      <UniqueIdentifier>{38e61547-636d-4330-bf12-a1ddd7b0beca}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\CircuitLiquide">
+      <UniqueIdentifier>{c4ff2427-761a-488e-8550-629332eb09c0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\CircuitSolide">
+      <UniqueIdentifier>{41329eae-d528-466e-ae25-55bc88eb3036}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Application">
+      <UniqueIdentifier>{894bb512-7f25-49a8-a097-53b2b6c584a9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Application">
+      <UniqueIdentifier>{3f45a0a8-6a6e-41c8-9946-4b145aa223ab}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\MachineAbs.h">
+      <Filter>Header Files\Machine</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\MachineBase.h">
+      <Filter>Header Files\Machine</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\MachineLuxe.h">
+      <Filter>Header Files\Machine</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Bouilloire.h">
+      <Filter>Header Files\CircuitLiquide</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ElmCircuitLiquide.h">
+      <Filter>Header Files\CircuitLiquide</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Pompe.h">
+      <Filter>Header Files\CircuitLiquide</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Reservoir.h">
+      <Filter>Header Files\CircuitLiquide</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Tuyau.h">
+      <Filter>Header Files\CircuitLiquide</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ElmCircuitSolide.h">
+      <Filter>Header Files\CircuitSolide</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Moteur.h">
+      <Filter>Header Files\CircuitSolide</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Receptacle.h">
+      <Filter>Header Files\CircuitSolide</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Test_TP4.h">
+      <Filter>Header Files\Application</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\CircuitLiqComposite.h">
+      <Filter>Header Files\CircuitLiquide</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\CircuitSolComposite.h">
+      <Filter>Header Files\CircuitSolide</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Filtre.h">
+      <Filter>Header Files\Machine</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\resultat_test.h">
+      <Filter>Header Files\Machine</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Transmission.h">
+      <Filter>Header Files\CircuitSolide</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\MachineAbs.cpp">
+      <Filter>Source Files\Machine</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\MachineBase.cpp">
+      <Filter>Source Files\Machine</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\MachineLuxe.cpp">
+      <Filter>Source Files\Machine</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Bouilloire.cpp">
+      <Filter>Source Files\CircuitLiquide</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ElmCircuitLiquide.cpp">
+      <Filter>Source Files\CircuitLiquide</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Pompe.cpp">
+      <Filter>Source Files\CircuitLiquide</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Reservoir.cpp">
+      <Filter>Source Files\CircuitLiquide</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Tuyau.cpp">
+      <Filter>Source Files\CircuitLiquide</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ElmCircuitSolide.cpp">
+      <Filter>Source Files\CircuitSolide</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Moteur.cpp">
+      <Filter>Source Files\CircuitSolide</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Receptacle.cpp">
+      <Filter>Source Files\CircuitSolide</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Main.cpp">
+      <Filter>Source Files\Application</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Test_TP4.cpp">
+      <Filter>Source Files\Application</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\CircuitLiqComposite.cpp">
+      <Filter>Source Files\CircuitLiquide</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\CircuitSolComposite.cpp">
+      <Filter>Source Files\CircuitSolide</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Filtre.cpp">
+      <Filter>Source Files\Machine</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Transmission.cpp">
+      <Filter>Source Files\CircuitSolide</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>
