@@ -18,20 +18,20 @@ void save_page(char *fname, void *ptr) {
     (void) fname;
     (void) ptr;
 
-    volatile char *adress = (int)ptr & 0xFFFFF000; (void) adress;
+    volatile void *adress = (long)ptr & 0xFFFFFFFFFFFFF000; (void) adress;
     FILE *fd;
     fd = fopen(fname,"w"); 
-    while (((int)adress & 0x00000FFF) != 0x00000FFF){
-            fprintf(fd, "%d %d \n" , adress, *adress);
+    while (((long)adress & 0x0000000000000FFF) != 0x0000000000000FFF){
+            fprintf(fd, "%x %08x\n" , adress, *(int*)adress);
             adress++;
     }
     fclose(fd);
     /*
      * TODO:
-     * 1 - calculer l'adresse du début de la page
-     * 2 - ouvrir le fichier de destination
-     * 3 - écrire la page dans le fichier
-     * 4 - fermer le fichier
+     * 1 - calculer l'adresse du début de la page DONE
+     * 2 - ouvrir le fichier de destination DONE
+     * 3 - écrire la page dans le fichier KINDA
+     * 4 - fermer le fichier DONE
      */
 
     return;
@@ -65,6 +65,6 @@ int main(int argc, char **argv) {
     beef3[1] = 0xBEEF4444;
 
     save_page("beef.page", (void *)beef1);
-    //save_page("cafe.page", (void *)&cafe1);
+    save_page("cafe.page", (void *)&cafe1);
     return 0;
 }
