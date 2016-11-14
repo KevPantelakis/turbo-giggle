@@ -3,6 +3,7 @@ import java.util.Scanner;
 import java.util.StringJoiner;
 import java.util.TimeZone;
 import java.util.Vector;
+import java.util.stream.StreamSupport;
 
 
 public class Main {
@@ -67,7 +68,7 @@ public class Main {
 
                     //Affichage du choix de cours courrant
                     case 1:
-                        query = "WITH T AS (SELECT DISTINCT C.TITRE,CT.RESPONSABLE,I.SIGLE,I.NUMSECT FROM COURS C,COURSTRIM CT,INSCRIPTION I WHERE (C.SIGLE = I.SIGLE AND C.SIGLE = CT.SIGLE AND I.TRIM = '16-3' AND I.MATRICULE = " + matricule +" )) select T.SIGLE, T.TITRE, T.NUMSECT, P.PRENOM, P.NOM FROM T LEFT JOIN PERSONNE P on (T.RESPONSABLE = P.NAS)";
+                        query = "WITH T AS (SELECT DISTINCT C.TITRE,CT.RESPONSABLE,I.SIGLE,I.NUMSECT FROM COURS C,COURSTRIM CT,INSCRIPTION I WHERE C.SIGLE = I.SIGLE AND C.SIGLE = CT.SIGLE AND I.TRIM = '16-3' AND I.MATRICULE = " + matricule +" AND CT.TRIM = '16-3') select T.SIGLE, T.TITRE, T.NUMSECT, P.PRENOM, P.NOM FROM T LEFT JOIN PERSONNE P on (T.RESPONSABLE = P.NAS)";
                         queryResults = makeJavaGreatAgain.executeQuery(query);
                         System.out.println("CHOIX DE COURS SESSION AUTOMNE 2016");
                         System.out.println(stringFill("",'-',125));
@@ -102,6 +103,7 @@ public class Main {
                         }
                         else {
                             System.out.println(sigle + " n'est pas un sigle valide, la suppression de cours a été annulée. \n");
+                            queryResults.close();
                             break;
                         }
                         /*
@@ -121,7 +123,6 @@ public class Main {
                             if(choice == 1) {
                                 query = "DELETE FROM INSCRIPTION I WHERE I.TRIM = '16-3' AND I.MATRICULE = '" + matricule + "' AND I.SIGLE = '" + sigle + "'";
                                 makeJavaGreatAgain.executeQuery(query);
-                                queryResults.close();
                                 System.out.println("Le cours " + cours + ", à été supprimé avec succès.\n");
                             }
                             else{
@@ -131,19 +132,17 @@ public class Main {
                         else {
                             System.out.println("Le cours " + cours + " ne peut pas être supprimé, car il n'est pas dans votre choix de cours.\n");
                         }
+                        queryResults.close();
                         break;
 
                     // Ajout d'un cours
                     case 3:
-                        /*
-                        TODO
+
+                        /* TODO
                         VÉRIFIER SI LE COURS SE DONNE AU TRIMESTRE 16-3,
-                        VÉRIFIER SI LE COURS A DES PRÉREQUIS,
-                        VÉRIFIER SI L'ÉTUDIANT A LES PRÉREQUIS NÉCÉSSAIRE,
-                        AJOUTER LE COURS,
-                        ANNULER L'OPÉRATION,
+                        AJOUTER LE COURS
                         */
-                        System.out.println("Vous avez choisi: Ajout d'un cours.\nVeuillez entrer le sigle du cours à ajouter. \n~$>");
+                        System.out.println("Vous avez choisi: Ajout d'un cours.\nVeuillez entrer le sigle du cours à ajouter. \n"+ "~$>");
                         sigle = scanner.next();
 
                         /*
@@ -158,8 +157,27 @@ public class Main {
                         }
                         else {
                             System.out.println(sigle + " n'est pas un sigle valide, l'ajout de cours a été annulée \n");
+                            queryResults.close();
                             break;
                         }
+                        // Vérifier si le cours ce donne au trimestre 16-3
+
+
+                        //Vérifier si l'étudiant possède tout les prérequis pour faire le cours
+                        query = "SELECT LEPREREQUIS FROM PREREQUIS PR WHERE PR.SIGLE = '" + sigle + "' AND LEPREREQUIS NOT IN (SELECT SIGLE FROM INSCRIPTION I WHERE I.MATRICULE = '"+matricule+"' AND TRIM <> '16-3')";
+                        queryResults = makeJavaGreatAgain.executeQuery(query);
+                        if(queryResults.next()){
+                            System.out.println("Impossible d'ajouter le cours " + cours +", car il vous manque le(s) cours suivant(s):\t" );
+                            do {
+                                System.out.println("\t"+ queryResults.getString("LEPREREQUIS"));
+                            }
+                            while(queryResults.next());
+                            queryResults.close();
+                            break;
+                        }
+
+                        //Ajouter le cours aux choix de cours
+
                         break;
 
                     // Validation
