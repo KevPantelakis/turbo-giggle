@@ -52,6 +52,10 @@ float CircuitLiqComposite::getTartre(void) const {
 }
 
 void CircuitLiqComposite::operer(float duree){
+	for each (ElmCircuitLiqPtr it in m_CircuitLiquide)
+	{
+		it.get()->operer(duree);
+	}
 }
 
 void CircuitLiqComposite::nettoyer(){

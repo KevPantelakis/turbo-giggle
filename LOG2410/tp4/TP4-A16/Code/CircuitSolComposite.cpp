@@ -54,9 +54,19 @@ float CircuitSolComposite::getDebris(void) const {
 }
 
 void CircuitSolComposite::operer( float duree ){
+	for each (ElmCircuitSolPtr it in m_CircuitSolide)
+	{
+		it->operer(duree);
+	}
+
 }
 
 void CircuitSolComposite::nettoyer(){
+
+	for each (ElmCircuitSolPtr it in m_CircuitSolide)
+	{
+		it->nettoyer();
+	}
 }
 
 
