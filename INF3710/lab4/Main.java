@@ -46,13 +46,13 @@ public class Main {
             TimeZone timeZone = TimeZone.getTimeZone("Montreal");
             TimeZone.setDefault(timeZone);
             Class.forName("oracle.jdbc.OracleDriver");
-            connexion = DriverManager.getConnection("jdbc:oracle:thin:@//ora-labos.labos.polymtl.ca:2001/labos", nomUtilisateur,password);
+            connexion = DriverManager.getConnection("jdbc:oracle:thin:@//ora-labos.labos.polymtl.ca:2001/labos", nomUtilisateur, password);
             System.out.println("Connected!");
 
             /* variables*/
             Scanner scanner = new Scanner(System.in); //lire le stdin
-            String matricule;
-            String sigle;
+            String matricule  = "";
+            String sigle = "";
             String cours;
             int nbCredits;
             int choice;
@@ -61,11 +61,24 @@ public class Main {
             ResultSet queryResults;
             String query;
             Vector<String> vecS = new Vector<>();
-
-            System.out.print("Entrer votre matricule \n~$> ");
-            matricule = scanner.next();
-
             boolean cont=true;
+
+            //Vérifier si le matricule est valide.
+            while(cont) {
+                System.out.print("Entrer votre matricule \n~$> ");
+                matricule = scanner.next();
+                query = "SELECT NOM FROM PERSONNE P WHERE P.MATRICULE = '" + matricule + "'";
+                queryResults = makeJavaGreatAgain.executeQuery(query);
+                if (!queryResults.next()) {
+                    System.out.println(matricule + " n'est pas un matricule valide.\n Choisissez parmis les options suivantes :\n\t(1) Entrer un nouveau matricule\n\t(2) Quitter\n~$>");
+                    choice = scanner.nextInt();
+                    if(choice == 2){
+                        cont = false;
+                    }
+                }
+                else break;
+            }
+
             while (cont) {
                 System.out.print("Choisissez parmis les options suivantes :\n\t(1) Affichage du choix de cours courant\n\t(2) Suppression d'un cours\n\t(3) Ajout d'un cours\n\t(4) Validation\n\t(5) Quitter\n~$>");
                 choice = scanner.nextInt();
@@ -87,7 +100,7 @@ public class Main {
                             System.out.println(formatString(vecS));
                             vecS.clear();
                         }
-                        System.out.println("-----------------------------------------------------------------------------------------------------------------------------");
+                        System.out.println(stringFill("",'-',125));
                         queryResults.close();
                         break;
 
@@ -144,9 +157,24 @@ public class Main {
                     case 3:
 
                         /* TODO
-                        VÉRIFIER SI LE COURS SE DONNE AU TRIMESTRE 16-3,
-                        AJOUTER LE COURS
+                        Afficher les cours disponnibles.
                         */
+
+                        query = "WITH CPRE AS ( SELECT * FROM PREREQUIS PR WHERE PR.SIGLE IN (SELECT CT.SIGLE FROM COURSTRIM CT WHERE CT.TRIM = '16-3')) SELECT DISTINCT CPR.SIGLE, C.TITRE FROM CPRE CPR, COURS C, INSCRIPTION I WHERE CPR.LEPREREQUIS IN (SELECT SIGLE FROM INSCRIPTION I WHERE I.MATRICULE = " + matricule + " AND TRIM <> '16-3' AND I.NOTEFINALE <> 'F') AND CPR.SIGLE = C.SIGLE AND CPR.SIGLE NOT IN ( SELECT I.SIGLE FROM INSCRIPTION I WHERE I.MATRICULE = " + matricule + " AND I.TRIM = '16-3') UNION SELECT CT.SIGLE, C.TITRE FROM COURSTRIM CT, COURS C WHERE CT.TRIM = '16-3' AND CT.SIGLE NOT IN ( SELECT PR.SIGLE FROM PREREQUIS PR) AND CT.SIGLE = C.SIGLE AND CT.SIGLE NOT IN ( SELECT I.SIGLE FROM INSCRIPTION I WHERE I.MATRICULE = " + matricule + " AND I.TRIM = '16-3')";
+
+                        queryResults = makeJavaGreatAgain.executeQuery(query);
+                        System.out.println(stringFill("",'-',64));
+                        System.out.println("|            SIGLE             |             TITRE            |");
+                        System.out.println(stringFill("",'-',64));
+                        while (queryResults.next()) {
+                            vecS.add(queryResults.getString("sigle"));
+                            vecS.add(queryResults.getString("titre"));
+                            System.out.println(formatString(vecS));
+                            vecS.clear();
+                        }
+
+                        System.out.println(stringFill("",'-',64));
+
                         System.out.println("Vous avez choisi: Ajout d'un cours.\nVeuillez entrer le sigle du cours à ajouter. \n~$>");
                         sigle = scanner.next();
 
@@ -183,7 +211,7 @@ public class Main {
                         }
 
                         //Vérifier si l'étudiant possède tout les prérequis pour faire le cours
-                        query = "SELECT LEPREREQUIS FROM PREREQUIS PR WHERE PR.SIGLE = '" + sigle + "' AND LEPREREQUIS NOT IN (SELECT SIGLE FROM INSCRIPTION I WHERE I.MATRICULE = '"+matricule+"' AND TRIM <> '16-3')";
+                        query = "SELECT LEPREREQUIS FROM PREREQUIS PR WHERE PR.SIGLE = '" + sigle + "' AND LEPREREQUIS NOT IN (SELECT SIGLE FROM INSCRIPTION I WHERE I.MATRICULE = '" + matricule + "' AND TRIM <> '16-3')";
                         queryResults = makeJavaGreatAgain.executeQuery(query);
                         if(queryResults.next()){
                             System.out.println("Impossible d'ajouter le cours " + cours +", car il vous manque le(s) cours suivant(s):" );
@@ -214,13 +242,18 @@ public class Main {
 
                             if(nbCredits >= 9 && nbCredits <= 15){
                                 System.out.println("Vous avez validé votre choix de cours pour la prochaine session.");
-                                System.out.println("Vous aurez donc"+ nbCredits + " à votre prochaine session.");
+                                System.out.println("Vous aurez donc "+ nbCredits + " crédits lors de votre prochaine session.");
                                 connexion.commit();
                             }
                             else{
-                                System.out.println("Vous n'avez pas choisi assez de crédits, vous devez choisir entre 9 et 15 crédits.");
-                                System.out.println("\tVous avez selectionné " + nbCredits + " crédits.");
-                                connexion.rollback();
+                                if(nbCredits < 9) {
+                                    System.out.println("Vous n'avez pas choisi assez de crédits, vous devez choisir entre 9 et 15 crédits.");
+                                    System.out.println("\tVous avez selectionné " + nbCredits + " crédits.");
+                                }
+                                else{
+                                    System.out.println("Vous avez choisi trop de crédits, veuillez retirer des cours.");
+                                    System.out.println("\tVous avez selectionné " + nbCredits + " crédits.");
+                                }
                             }
                             queryResults.close();
                         }
@@ -229,6 +262,7 @@ public class Main {
                     // Quitter
                     case 5:
                         cont = false;
+                        connexion.rollback();
                         break;
                 }
             }
