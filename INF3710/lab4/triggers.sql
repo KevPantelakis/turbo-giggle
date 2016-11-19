@@ -21,13 +21,9 @@ WHERE SIGLE='CP510'
       AND TRIM = '19-3';
 
 DELETE FROM COURSTRIM WHERE SIGLE = 'CP510' AND TRIM = '19-3';
-
-
 INSERT INTO CoursTrim (sigle, trim, responsable) VALUES ('CP510', '19-3', 658414972);
-
 INSERT INTO CoursTrim (sigle, trim, responsable) VALUES ('CP510', '19-3', 300456273);
 DELETE FROM COURSTRIM CT WHERE CT.SIGLE = 'CP510' AND CT.TRIM = '19-3' AND CT.RESPONSABLE = 300456273;
-COMMIT;
 ------------------------------------------------------------------------------------------------------------
 
 
@@ -88,56 +84,50 @@ CREATE OR REPLACE TRIGGER bf_ins_up_TRIGGER_C
   END;
 --------------------------------------------------------------------------------------------------------------------------------------
 
+-----------------------------------------------TRIGGER_D------------------------------------------------------------------------------
+DROP TRIGGER bf_ins_TRIGGER_D;
+CREATE OR REPLACE TRIGGER bf_ins_TRIGGER_D
+  BEFORE INSERT ON INSCRIPTION
+  FOR EACH ROW
+  DECLARE
+    nbPreRequis INTEGER;
+  BEGIN
+    SELECT COUNT(*) INTO nbPreRequis FROM PREREQUIS PR
+    WHERE PR.SIGLE = :NEW.SIGLE
+    AND PR.LEPREREQUIS NOT IN (SELECT SIGLE FROM INSCRIPTION I
+    WHERE I.MATRICULE = :NEW.MATRICULE
+    AND I.TRIM <> :NEW.TRIM);
+
+    IF (nbPreRequis > 0) THEN
+      RAISE_APPLICATION_ERROR(-20010,'Vous devez poséder tous les prérequis du cours pour vous-y inscrire.');
+    END IF;
+  END;
+------------------------------------------------------------------------------------------------------------------------------------
 
 
+-------------------------------------------------TRIGGER_E--------------------------------------------------------------------------
+DROP TRIGGER bf_up_ins_TRIGGER_E;
+CREATE OR REPLACE TRIGGER bf_up_ins_TRIGGER_E
+  BEFORE UPDATE OR INSERT ON INSCRIPTION
+  FOR EACH ROW
+  DECLARE
+    pondera INTEGER;
+    trueMean REAL;
+  BEGIN
+    SELECT SUM(E.PONDERATION) INTO pondera FROM EPREUVE E
+    WHERE E.SIGLE = :NEW.SIGLE AND E.TRIM = :NEW.TRIM;
+    IF(pondera != 100) THEN
+      RAISE_APPLICATION_ERROR(-20011,'La pondération des épreuves pour le cours est érroné.');
+    END IF;
 
+    SELECT SUM((E.PONDERATION) * (N.LANOTE/100)) INTO trueMean FROM EPREUVE E, NOTE N
+    WHERE E.SIGLE = :NEW.SIGLE
+          AND E.TRIM = :NEW.TRIM
+          AND N.IDEPR = E.IDEPR
+          AND N.MATRICULE = :NEW.MATRICULE;
 
-/*
-----------------------------------------TEST TRIGGER B--------------------------------------------------------------------------------
---Pmatricule et matrcule à NULL
-INSERT INTO Personne (nas, nom, prenom, typPers, matricule, pmatricule) VALUES (239075522, 'Lavoie', 'Thierry', 'P', NULL , NULL);
-
---Pmatricule et matricule valide pour le type P ou X
-INSERT INTO Personne (nas, nom, prenom, typPers, matricule, pmatricule) VALUES (239075522, 'Lavoie', 'Thierry', 'X', 5454, 'p5454');
-
--- Un Professeur avec un matricule
-INSERT INTO Personne (nas, nom, prenom, typPers, matricule, pmatricule) VALUES (239075522, 'Lavoie', 'Thierry', 'P', 7654 , NULL);
-
--- Professeur avec pmatricule pas valide
-INSERT INTO Personne (nas, nom, prenom, typPers, matricule, pmatricule) VALUES (239075522, 'Lavoie', 'Thierry', 'P', NULL, '54p5454');
-
--- Professeur avec pmatricule valide
-INSERT INTO Personne (nas, nom, prenom, typPers, matricule, pmatricule) VALUES (239075522, 'Lavoie', 'Thierry', 'P', NULL, 'p5454');
-
-DELETE FROM PERSONNE WHERE NAS = 239075522;
-
-
--- Étudiant avec aucun matricule et aucun ppmatricule
-INSERT INTO Personne (nas, nom, prenom, typPers, matricule, pmatricule) VALUES (666666644, 'Lavoie', 'Thierry', 'E', NULL, NULL);
-
--- Étudiant avec pmatricule sans matricule
-INSERT INTO Personne (nas, nom, prenom, typPers, matricule, pmatricule) VALUES (666666644, 'Lavoie', 'Thierry', 'E', NULL, 'p9672');
-
--- Étudiant avec matricule et pmatricule
-INSERT INTO Personne (nas, nom, prenom, typPers, matricule, pmatricule) VALUES (666666644, 'Lavoie', 'Thierry', 'E', 5541, 'p9898');
-
--- Étudiant avec matricule non valide
-INSERT INTO Personne (nas, nom, prenom, typPers, matricule, pmatricule) VALUES (666666644, 'Lavoie', 'Thierry', 'E', 51, NULL);
-
--- Étudiant avec matricule valide
-INSERT INTO Personne (nas, nom, prenom, typPers, matricule, pmatricule) VALUES (666666644, 'Lavoie', 'Thierry', 'E', 5541, NULL);
-DELETE FROM PERSONNE WHERE NAS = 666666644;
-
-
-
--------------------------------------------TEST_TRIGGER_C----------------------------------------------------
-INSERT INTO INSCRIPTION (sigle, trim, matricule, numSect, cumulatif, noteFinale) VALUES ('AE4715', '19-3', 1047004, 1, NULL, NULL);
-INSERT INTO INSCRIPTION (sigle, trim, matricule, numSect, cumulatif, noteFinale) VALUES ('AE4715', '19-3', 826330, 1, NULL, NULL);
-INSERT INTO INSCRIPTION (sigle, trim, matricule, numSect, cumulatif, noteFinale) VALUES ('AE4715', '19-3', 1249441, 1, NULL, NULL);
-INSERT INTO INSCRIPTION (sigle, trim, matricule, numSect, cumulatif, noteFinale) VALUES ('AE4715', '19-3', 1233707, 1, NULL, NULL);
-
-DELETE FROM INSCRIPTION WHERE TRIM = '19-3';
-COMMIT;
-
-
-*/
+    IF (trueMean != :NEW.CUMULATIF) THEN
+      RAISE_APPLICATION_ERROR(-20042,'La moyenne(cummulatif) entré ne correspond pas aux résultats obtenus');
+    END IF;
+  END;
+------------------------------------------------------------------------------------------------------------------------------------
