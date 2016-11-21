@@ -1,0 +1,28 @@
+﻿  VisiteurSansEffet.cpp
+  VisiteurCalculVolumeLiquide.cpp
+  VisiteurCalculerPuissance.cpp
+  CircuitLiqComposite.cpp
+  Tuyau.cpp
+  CircuitSolComposite.cpp
+  Test_TP5.cpp
+  Reservoir.cpp
+  Receptacle.cpp
+  Pompe.cpp
+  Moteur.cpp
+  Main.cpp
+  MachineLuxe.cpp
+  MachineBase.cpp
+  MachineAbs.cpp
+  Filtre.cpp
+  Transmission.cpp
+  ProgrammeMachine.cpp
+  ExecuteurCommandes.cpp
+  ElmCircuitSolide.cpp
+  Génération de code en cours...
+  Compilation en cours...
+  ElmCircuitLiquide.cpp
+  CommandeTransfertLiqReservBouil.cpp
+  CommandeFixerTemperatureLiquide.cpp
+  Bouilloire.cpp
+  Génération de code en cours...
+  PolyInfusion.vcxproj -> C:\Users\p482457\Documents\devel\TP5-A16\Code\PolyInfusion\Debug\PolyInfusion.exe
