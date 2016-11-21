@@ -14,19 +14,30 @@ void CommandeTransfertLiqReservBouil::VisiteurTransfertLiqReservBouil::traiterRe
 {
 	// Verifier s'il y a suffisamment de liquide dans le reservoire
 	// Si oui, reduire le niveau du reservoir d'une quantite equivalente au volume transfere
-	// A completer
+	float niveauLiquide = _reserv->getNiveau();
+	if (m_volume <= niveauLiquide) {
+		_reserv->setNiveau(niveauLiquide - m_volume);
+	} else {
+		throw std::range_error("Erreur d'operation: il ne reste pas assez de liquide dans le réservoir.");
+	}
 }
 
 void CommandeTransfertLiqReservBouil::VisiteurTransfertLiqReservBouil::traiterPompe(Pompe * _pomp)
 {
 	// Operer la pompe pour une duree correspondant au temps necessaire pour transferer le volume de liquide
 	// La duree d'operation est le volume a transferer divise par le debit de la pompe
-	// A completer
+	_pomp->operer(m_volume / _pomp->getDebit());
+
 }
 
 void CommandeTransfertLiqReservBouil::VisiteurTransfertLiqReservBouil::traiterBouilloire(Bouilloire * _bouil)
 {
 	// Verifier si le volume restant de la bouilloire peut contenir la quantite de liquide transferee
 	// Si oui, augmenter le niveau de la bouilloire d'une quantite equivalente au volume transfere
-	// A completer
+	float niveauLiqide = _bouil->getNiveau() + m_volume;
+	if (niveauLiqide <= _bouil->getVolume()) {
+		_bouil->setNiveau(niveauLiqide);
+	} else {
+		throw std::range_error("Erreur d'opération: la bouilloire ne peut pas contenir autant de liquide.");
+	}
 }
