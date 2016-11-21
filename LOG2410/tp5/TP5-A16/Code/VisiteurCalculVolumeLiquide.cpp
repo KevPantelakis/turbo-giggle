@@ -19,19 +19,19 @@ VisiteurCalculVolumeLiquide::VisiteurCalculVolumeLiquide()
 void VisiteurCalculVolumeLiquide::traiterBouilloire(Bouilloire* _bouil)
 {
 	// Calcul du volume de la bouilloire
-	// A completer
+	_volumeTotal += _bouil->getVolume();
 }
 
 void VisiteurCalculVolumeLiquide::traiterPompe(Pompe* _pomp)
 {
 	// Le volume de la pompe est une valeur fixe
-	// A completer
+	_volumeTotal += _pomp->volumeLiquide;
 }
 
 void VisiteurCalculVolumeLiquide::traiterReservoir(Reservoir* _reserv)
 {
 	// Calcul du volume de la bouilloire
-	// A completer
+	_volumeTotal += _reserv->getVolume();
 }
 
 void VisiteurCalculVolumeLiquide::traiterTuyau(Tuyau* _tuy)

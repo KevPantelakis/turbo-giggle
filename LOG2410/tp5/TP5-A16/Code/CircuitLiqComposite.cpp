@@ -49,12 +49,10 @@ void CircuitLiqComposite::addSousElement(ElmCircuitLiquide* sousElm){
 float CircuitLiqComposite::getTartre(void) const {
 	int nse = nombreSousElements();
 	float tartreMax = 0;
-	ElmCircuitLiqPtr sep;
-	float tartre;
 	for (int ise = 0; ise < nse; ++ise)
 	{
-		sep = getSousElement(ise);
-		tartre = sep->getTartre();
+		ElmCircuitLiqPtr sep = getSousElement(ise);
+		auto tartre = sep->getTartre();
 		tartreMax = (tartre>tartreMax) ? tartre : tartreMax;
 	}
 	return tartreMax;
@@ -62,20 +60,18 @@ float CircuitLiqComposite::getTartre(void) const {
 
 void CircuitLiqComposite::operer(float duree){
 	int nse = nombreSousElements();
-	ElmCircuitLiqPtr sep;
 	for (int ise = 0; ise < nse; ++ise)
 	{
-		sep = getSousElement(ise);
+		ElmCircuitLiqPtr sep = getSousElement(ise);
 		sep->operer(duree);
 	}
 }
 
 void CircuitLiqComposite::nettoyer(){
 	int nse = nombreSousElements();
-	ElmCircuitLiqPtr sep;
 	for (int ise = 0; ise < nse; ++ise)
 	{
-		sep = getSousElement(ise);
+		ElmCircuitLiqPtr sep = getSousElement(ise);
 		sep->nettoyer();
 	}
 }

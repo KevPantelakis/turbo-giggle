@@ -51,11 +51,10 @@ void CircuitSolComposite::addSousElement(ElmCircuitSolide* sousElem){
 float CircuitSolComposite::getDebris(void) const {
 	int nse = nombreSousElements();
 	float debrisMax = 0;
-	float debris = 0;
-	ElmCircuitSolPtr sep;
-	for (int ise = 0; ise < nse; ++ise) {
-		sep = getSousElement(ise);
-		debris = sep->getDebris();
+	for (int ise = 0; ise < nse; ++ise)
+	{
+		ElmCircuitSolPtr sep = getSousElement(ise);
+		auto debris = sep->getDebris();
 		debrisMax = (debris>debrisMax) ? debris : debrisMax;
 	}
 	return debrisMax;
@@ -63,18 +62,18 @@ float CircuitSolComposite::getDebris(void) const {
 
 void CircuitSolComposite::operer( float duree ){
 	int nse = nombreSousElements();
-	ElmCircuitSolPtr sep;
-	for (int ise = 0; ise < nse; ++ise) {
-		sep = getSousElement(ise);
+	for (int ise = 0; ise < nse; ++ise)
+	{
+		ElmCircuitSolPtr sep = getSousElement(ise);
 		sep->operer(duree);
 	}
 }
 
 void CircuitSolComposite::nettoyer(){
 	int nse = nombreSousElements();
-	ElmCircuitSolPtr sep;
-	for (int ise = 0; ise < nse; ++ise) {
-		sep = getSousElement(ise);
+	for (int ise = 0; ise < nse; ++ise)
+	{
+		ElmCircuitSolPtr sep = getSousElement(ise);
 		sep->nettoyer();
 	}
 }
