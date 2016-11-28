@@ -121,6 +121,18 @@ void PipelineManager::launchParallel(int queueSize)
      * Démarrer les threads Windows
      * Attention: utilisez seulement l'API Windows (pas l'API de Qt!)
      */
+    HANDLE hThreads = new HANDLE[stageList.size()];
+
+    for (int i = 0; i < stageList.size(); i++) {
+       hThreads[i] = CreateThread(NULL, 0, startHelper, stageList.at(i), 0, NULL);
+    }
+
+    WaitForMultipleObjects(stageList.size(),hThreads,TRUE,INFINITE);
+
+    for (int i = 0; i < stageList.size(); i++) {
+        CloseHandle(hThreads[i]);
+    }
+
     qDebug() << "TODO demarrer les threads";
 #endif
 }

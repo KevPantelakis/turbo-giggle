@@ -1,7 +1,9 @@
 #ifndef IMAGEQUEUE_H
 #define IMAGEQUEUE_H
 
+#include <windows.h>
 #include <QObject>
+#include <QQueue>
 
 class QImage;
 
@@ -16,6 +18,9 @@ public:
     bool isEmpty();
 private:
     int m_capacity;
+    QQueue<QImage*> queue;
+    HANDLE handleQ;
+    HANDLE handleDQ;
 };
 
 #endif // IMAGEQUEUE_H
