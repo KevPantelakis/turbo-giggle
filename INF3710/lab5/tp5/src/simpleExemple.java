@@ -49,7 +49,7 @@ public class simpleExemple {
         lol.put("year", new BasicDBObject("$gte", 2000));
         FindIterable<Document> ittr = coll.find(lol);
         for (Document d : ittr) {
-            System.out.println(d);
+            System.out.println("Title : " + d.get("title"));
         }
 
     }
@@ -65,10 +65,10 @@ public class simpleExemple {
                 try {
                     Document p = d.get("pages", Document.class);
                     int pages = p.getInteger("end") - p.getInteger("start");
-                    System.out.println("Title : " + d.get("title") + "\n\tNombre de pages : " + pages + "\n");
+                    System.out.println("Title: " + d.get("title") + " Nombre de pages : " + pages);
                 }
                 catch (Exception e) {
-                    System.out.println("Title : " + d.get("title") + "\n\tNombre de pages : Inconnu de l'homme jusqu'à maintenant\n");
+                    System.out.println("Title: " + d.get("title") + " Nombre de pages : Inconnu de l'homme jusqu'à maintenant");
                 }
             }
         }
@@ -102,6 +102,17 @@ public class simpleExemple {
 
     public static void numeroF(String collection, MongoDatabase db){}
 
+    public static void executeQueries(String collection, MongoDatabase db){
+
+        numeroA(collection, db);
+        numeroB(collection, db);
+        numeroC(collection, db);
+        numeroD(collection, db);
+        numeroE(collection, db);
+        numeroF(collection, db);
+
+    }
+
     public static void connection(String dbname) {
         try {
             String uri = "mongodb://root:123@ds113678.mlab.com:13678/kevricherinf3710";
@@ -113,20 +124,12 @@ public class simpleExemple {
 
             // uncomment this line to populate de collection.
             //importJsonIntoCollection("/Users/richerarc/git/poly/turbo-giggle/INF3710/lab5/materiels/dblp.json", collection, db);
+
+
             //
 
-
-            // uncomment this line to execute the query for a)
-            //numeroA(collection, db);
-
-            // uncomment this line to execute the query for b)
-            //numeroB(collection, db);
-
-            // uncomment this line to execute the query for c)
-            //numeroC(collection, db);
-
-
-            numeroD(collection, db);
+            // uncomment this line to execute the queries  a) to f)
+            executeQueries(collection,db);
 
 
             client.close();
