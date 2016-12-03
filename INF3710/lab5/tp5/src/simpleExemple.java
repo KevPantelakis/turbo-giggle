@@ -44,6 +44,7 @@ public class simpleExemple {
 
     public static void numeroA(String collection, MongoDatabase db) {
 
+        System.out.println("Executing query a)");
         MongoCollection<Document> coll = db.getCollection(collection);
         BasicDBObject lol = new BasicDBObject();
         lol.put("year", new BasicDBObject("$gte", 2000));
@@ -56,6 +57,7 @@ public class simpleExemple {
 
     public static void numeroB(String collection, MongoDatabase db) {
 
+        System.out.println("Executing query b)");
         MongoCollection<Document> coll = db.getCollection(collection);
         BasicDBObject cond = new BasicDBObject();
         cond.put("year", new BasicDBObject("$gte", 2013));
@@ -77,6 +79,7 @@ public class simpleExemple {
 
     public static void numeroC(String collection, MongoDatabase db) {
 
+        System.out.println("Executing query c)");
         MongoCollection<Document> coll = db.getCollection(collection);
         MongoCursor<String> ittr = coll.distinct("publisher", String.class).iterator();  // <-- So long "ThisClark" and thanks for all the fish
         while (ittr.hasNext()) {
@@ -87,6 +90,7 @@ public class simpleExemple {
 
     public static void numeroD(String collection, MongoDatabase db) {
 
+        System.out.println("Executing query d)");
         MongoCollection<Document> coll = db.getCollection(collection);
         BasicDBObject cond = new BasicDBObject();
         cond.put("authors", "Ingrid Zukerman");
@@ -98,10 +102,48 @@ public class simpleExemple {
 
     }
 
-    public static void numeroE(String collection, MongoDatabase db){}
+    public static void numeroE(String collection, MongoDatabase db){
 
-    public static void numeroF(String collection, MongoDatabase db){}
+        System.out.println("Executing query e)");
+    }
 
+    public static void numeroF(String collection, MongoDatabase db){
+
+        System.out.println("Executing query f)");
+    }
+
+    //Insert query number (a,b,c,d,e,f) to execute the query on a collection of a Mongo Database
+    public static void executeQuery(char queryNum, String collection, MongoDatabase db ){
+        switch (queryNum){
+            case 'a':
+            case 'A':
+                numeroA(collection, db);
+                break;
+            case 'b':
+            case 'B':
+                numeroB(collection, db);
+                break;
+            case 'c':
+            case 'C':
+                numeroC(collection, db);
+                break;
+            case 'd':
+            case 'D':
+                numeroD(collection, db);
+                break;
+            case 'e':
+            case 'E':
+                numeroE(collection, db);
+                break;
+            case 'f':
+            case 'F':
+                numeroF(collection, db);
+                break;
+        }
+
+    }
+
+    // Execute all queries in order on a collection of a Mongo Database
     public static void executeQueries(String collection, MongoDatabase db){
 
         numeroA(collection, db);
@@ -123,14 +165,13 @@ public class simpleExemple {
             MongoDatabase db = client.getDatabase(dbname);
 
             // uncomment this line to populate de collection.
-            //importJsonIntoCollection("/Users/richerarc/git/poly/turbo-giggle/INF3710/lab5/materiels/dblp.json", collection, db);
-
-
-            //
+            // importJsonIntoCollection("/Users/richerarc/git/poly/turbo-giggle/INF3710/lab5/materiels/dblp.json", collection, db);
+            
+            // Uncomment this line to execute desired query
+            // executeQuery('a',collection,db);
 
             // uncomment this line to execute the queries  a) to f)
             executeQueries(collection,db);
-
 
             client.close();
         }
@@ -143,7 +184,5 @@ public class simpleExemple {
     public static void main(String[] args) throws UnknownHostException {
         // TODO Auto-generated method stub
         connection("kevricherinf3710");
-
-
     }
 }

@@ -25,12 +25,19 @@
       <file leaf-file-name="simpleExemple.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/simpleExemple.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="352">
-              <caret line="130" column="67" selection-start-line="130" selection-start-column="67" selection-end-line="130" selection-end-column="67" />
+            <state relative-caret-position="236">
+              <caret line="168" column="12" selection-start-line="168" selection-start-column="12" selection-end-line="168" selection-end-column="12" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="method#importJsonIntoCollection#0;class#simpleExemple#0" expanded="false" />
+                <element signature="method#numeroA#0;class#simpleExemple#0" expanded="false" />
+                <element signature="method#numeroB#0;class#simpleExemple#0" expanded="false" />
                 <element signature="method#numeroC#0;class#simpleExemple#0" expanded="false" />
+                <element signature="method#numeroD#0;class#simpleExemple#0" expanded="false" />
+                <element signature="method#numeroE#0;class#simpleExemple#0" expanded="false" />
+                <element signature="method#numeroF#0;class#simpleExemple#0" expanded="false" />
+                <element signature="method#executeQuery#0;class#simpleExemple#0" expanded="false" />
+                <element signature="method#executeQueries#0;class#simpleExemple#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -563,12 +570,12 @@
       <workItem from="1480442401489" duration="8229000" />
       <workItem from="1480773165653" duration="1112000" />
       <workItem from="1480775544263" duration="343000" />
-      <workItem from="1480776631075" duration="624000" />
+      <workItem from="1480776631075" duration="1526000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="10308000" />
+    <option name="totallyTimeSpent" value="11210000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -626,7 +633,7 @@
       <breakpoints-dialog>
         <breakpoints-dialog />
       </breakpoints-dialog>
-      <option name="time" value="11" />
+      <option name="time" value="12" />
     </breakpoint-manager>
     <watches-manager />
   </component>
@@ -642,7 +649,14 @@
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="method#importJsonIntoCollection#0;class#simpleExemple#0" expanded="false" />
+            <element signature="method#numeroA#0;class#simpleExemple#0" expanded="false" />
+            <element signature="method#numeroB#0;class#simpleExemple#0" expanded="false" />
             <element signature="method#numeroC#0;class#simpleExemple#0" expanded="false" />
+            <element signature="method#numeroD#0;class#simpleExemple#0" expanded="false" />
+            <element signature="method#numeroE#0;class#simpleExemple#0" expanded="false" />
+            <element signature="method#numeroF#0;class#simpleExemple#0" expanded="false" />
+            <element signature="method#executeQuery#0;class#simpleExemple#0" expanded="false" />
+            <element signature="method#executeQueries#0;class#simpleExemple#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -654,7 +668,14 @@
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="method#importJsonIntoCollection#0;class#simpleExemple#0" expanded="false" />
+            <element signature="method#numeroA#0;class#simpleExemple#0" expanded="false" />
+            <element signature="method#numeroB#0;class#simpleExemple#0" expanded="false" />
             <element signature="method#numeroC#0;class#simpleExemple#0" expanded="false" />
+            <element signature="method#numeroD#0;class#simpleExemple#0" expanded="false" />
+            <element signature="method#numeroE#0;class#simpleExemple#0" expanded="false" />
+            <element signature="method#numeroF#0;class#simpleExemple#0" expanded="false" />
+            <element signature="method#executeQuery#0;class#simpleExemple#0" expanded="false" />
+            <element signature="method#executeQueries#0;class#simpleExemple#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -666,7 +687,14 @@
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="method#importJsonIntoCollection#0;class#simpleExemple#0" expanded="false" />
+            <element signature="method#numeroA#0;class#simpleExemple#0" expanded="false" />
+            <element signature="method#numeroB#0;class#simpleExemple#0" expanded="false" />
             <element signature="method#numeroC#0;class#simpleExemple#0" expanded="false" />
+            <element signature="method#numeroD#0;class#simpleExemple#0" expanded="false" />
+            <element signature="method#numeroE#0;class#simpleExemple#0" expanded="false" />
+            <element signature="method#numeroF#0;class#simpleExemple#0" expanded="false" />
+            <element signature="method#executeQuery#0;class#simpleExemple#0" expanded="false" />
+            <element signature="method#executeQueries#0;class#simpleExemple#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -681,12 +709,19 @@
     <entry file="jar://$PROJECT_DIR$/../materiels/drivers/mongodb-driver-3.2.2.jar!/com/mongodb/client/MongoCollection.class" />
     <entry file="file://$PROJECT_DIR$/src/simpleExemple.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="352">
-          <caret line="130" column="67" selection-start-line="130" selection-start-column="67" selection-end-line="130" selection-end-column="67" />
+        <state relative-caret-position="236">
+          <caret line="168" column="12" selection-start-line="168" selection-start-column="12" selection-end-line="168" selection-end-column="12" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="method#importJsonIntoCollection#0;class#simpleExemple#0" expanded="false" />
+            <element signature="method#numeroA#0;class#simpleExemple#0" expanded="false" />
+            <element signature="method#numeroB#0;class#simpleExemple#0" expanded="false" />
             <element signature="method#numeroC#0;class#simpleExemple#0" expanded="false" />
+            <element signature="method#numeroD#0;class#simpleExemple#0" expanded="false" />
+            <element signature="method#numeroE#0;class#simpleExemple#0" expanded="false" />
+            <element signature="method#numeroF#0;class#simpleExemple#0" expanded="false" />
+            <element signature="method#executeQuery#0;class#simpleExemple#0" expanded="false" />
+            <element signature="method#executeQueries#0;class#simpleExemple#0" expanded="false" />
           </folding>
         </state>
       </provider>
