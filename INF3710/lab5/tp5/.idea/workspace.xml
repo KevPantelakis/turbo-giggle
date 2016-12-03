@@ -25,23 +25,21 @@
       <file leaf-file-name="simpleExemple.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/simpleExemple.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1021">
-              <caret line="189" column="5" selection-start-line="189" selection-start-column="5" selection-end-line="189" selection-end-column="5" />
+            <state relative-caret-position="128">
+              <caret line="166" column="49" selection-start-line="166" selection-start-column="49" selection-end-line="166" selection-end-column="49" />
               <folding>
                 <element signature="imports" expanded="true" />
+                <element signature="method#importJsonIntoCollection#0;class#simpleExemple#0" expanded="false" />
                 <element signature="method#numeroA#0;class#simpleExemple#0" expanded="false" />
                 <element signature="method#numeroB#0;class#simpleExemple#0" expanded="false" />
                 <element signature="method#numeroC#0;class#simpleExemple#0" expanded="false" />
                 <element signature="method#numeroD#0;class#simpleExemple#0" expanded="false" />
                 <element signature="method#numeroE#0;class#simpleExemple#0" expanded="false" />
                 <element signature="method#numeroF#0;class#simpleExemple#0" expanded="false" />
-                <element signature="method#numeroG#0;class#simpleExemple#0" expanded="false" />
-                <element signature="e#6855#6863#0" expanded="true" />
-                <element signature="e#6949#6957#0" expanded="true" />
                 <element signature="method#numeroH#0;class#simpleExemple#0" expanded="false" />
-                <element signature="e#7965#7973#0" expanded="true" />
                 <element signature="method#executeQuery#0;class#simpleExemple#0" expanded="false" />
                 <element signature="method#executeQueries#0;class#simpleExemple#0" expanded="false" />
+                <element signature="method#main#0;class#simpleExemple#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -75,8 +73,10 @@
     </option>
   </component>
   <component name="ProjectFrameBounds">
+    <option name="x" value="-9" />
+    <option name="y" value="-9" />
     <option name="width" value="1938" />
-    <option name="height" value="1195" />
+    <option name="height" value="1060" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="false">
     <OptionsSetting value="true" id="Add" />
@@ -103,12 +103,29 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="ProjectPane">
-        <subPane />
-      </pane>
+      <pane id="PackagesPane" />
       <pane id="Scratches" />
       <pane id="Scope" />
-      <pane id="PackagesPane" />
+      <pane id="ProjectPane">
+        <subPane>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="tp5" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="tp5" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="tp5" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+        </subPane>
+      </pane>
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -574,11 +591,12 @@
       <workItem from="1480775544263" duration="343000" />
       <workItem from="1480776631075" duration="1526000" />
       <workItem from="1480778556081" duration="4350000" />
+      <workItem from="1480783214593" duration="17343000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="15560000" />
+    <option name="totallyTimeSpent" value="32903000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -590,34 +608,34 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="0" width="1938" height="1195" extended-state="0" />
+    <frame x="-9" y="-9" width="1938" height="1060" extended-state="6" />
     <editor active="false" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32971016" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32910246" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32960895" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32849163" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.50679964" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.1452514" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32910246" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24946351" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.24946351" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.39945653" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.2659218" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
   <component name="Vcs.Log.UiProperties">
@@ -636,9 +654,14 @@
       <breakpoints-dialog>
         <breakpoints-dialog />
       </breakpoints-dialog>
-      <option name="time" value="22" />
+      <option name="time" value="33" />
     </breakpoint-manager>
-    <watches-manager />
+    <watches-manager>
+      <configuration name="Application">
+        <watch expression="((com.mongodb.BasicDBObject)((FindIterableImpl)d).filter).entrySet().toArray()[0]" custom="com.mongodb.FindIterableImpl,com.mongodb.BasicDBObject" />
+        <watch expression="((FindIterableImpl)d).filter" custom="com.mongodb.FindIterableImpl" />
+      </configuration>
+    </watches-manager>
   </component>
   <component name="antWorkspaceConfiguration">
     <option name="IS_AUTOSCROLL_TO_SOURCE" value="false" />
@@ -651,19 +674,17 @@
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
+            <element signature="method#importJsonIntoCollection#0;class#simpleExemple#0" expanded="false" />
             <element signature="method#numeroA#0;class#simpleExemple#0" expanded="false" />
             <element signature="method#numeroB#0;class#simpleExemple#0" expanded="false" />
             <element signature="method#numeroC#0;class#simpleExemple#0" expanded="false" />
             <element signature="method#numeroD#0;class#simpleExemple#0" expanded="false" />
             <element signature="method#numeroE#0;class#simpleExemple#0" expanded="false" />
             <element signature="method#numeroF#0;class#simpleExemple#0" expanded="false" />
-            <element signature="method#numeroG#0;class#simpleExemple#0" expanded="false" />
-            <element signature="e#6855#6863#0" expanded="true" />
-            <element signature="e#6949#6957#0" expanded="true" />
             <element signature="method#numeroH#0;class#simpleExemple#0" expanded="false" />
-            <element signature="e#7965#7973#0" expanded="true" />
             <element signature="method#executeQuery#0;class#simpleExemple#0" expanded="false" />
             <element signature="method#executeQueries#0;class#simpleExemple#0" expanded="false" />
+            <element signature="method#main#0;class#simpleExemple#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -674,19 +695,17 @@
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
+            <element signature="method#importJsonIntoCollection#0;class#simpleExemple#0" expanded="false" />
             <element signature="method#numeroA#0;class#simpleExemple#0" expanded="false" />
             <element signature="method#numeroB#0;class#simpleExemple#0" expanded="false" />
             <element signature="method#numeroC#0;class#simpleExemple#0" expanded="false" />
             <element signature="method#numeroD#0;class#simpleExemple#0" expanded="false" />
             <element signature="method#numeroE#0;class#simpleExemple#0" expanded="false" />
             <element signature="method#numeroF#0;class#simpleExemple#0" expanded="false" />
-            <element signature="method#numeroG#0;class#simpleExemple#0" expanded="false" />
-            <element signature="e#6855#6863#0" expanded="true" />
-            <element signature="e#6949#6957#0" expanded="true" />
             <element signature="method#numeroH#0;class#simpleExemple#0" expanded="false" />
-            <element signature="e#7965#7973#0" expanded="true" />
             <element signature="method#executeQuery#0;class#simpleExemple#0" expanded="false" />
             <element signature="method#executeQueries#0;class#simpleExemple#0" expanded="false" />
+            <element signature="method#main#0;class#simpleExemple#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -697,19 +716,17 @@
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
+            <element signature="method#importJsonIntoCollection#0;class#simpleExemple#0" expanded="false" />
             <element signature="method#numeroA#0;class#simpleExemple#0" expanded="false" />
             <element signature="method#numeroB#0;class#simpleExemple#0" expanded="false" />
             <element signature="method#numeroC#0;class#simpleExemple#0" expanded="false" />
             <element signature="method#numeroD#0;class#simpleExemple#0" expanded="false" />
             <element signature="method#numeroE#0;class#simpleExemple#0" expanded="false" />
             <element signature="method#numeroF#0;class#simpleExemple#0" expanded="false" />
-            <element signature="method#numeroG#0;class#simpleExemple#0" expanded="false" />
-            <element signature="e#6855#6863#0" expanded="true" />
-            <element signature="e#6949#6957#0" expanded="true" />
             <element signature="method#numeroH#0;class#simpleExemple#0" expanded="false" />
-            <element signature="e#7965#7973#0" expanded="true" />
             <element signature="method#executeQuery#0;class#simpleExemple#0" expanded="false" />
             <element signature="method#executeQueries#0;class#simpleExemple#0" expanded="false" />
+            <element signature="method#main#0;class#simpleExemple#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -720,19 +737,38 @@
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
+            <element signature="method#importJsonIntoCollection#0;class#simpleExemple#0" expanded="false" />
             <element signature="method#numeroA#0;class#simpleExemple#0" expanded="false" />
             <element signature="method#numeroB#0;class#simpleExemple#0" expanded="false" />
             <element signature="method#numeroC#0;class#simpleExemple#0" expanded="false" />
             <element signature="method#numeroD#0;class#simpleExemple#0" expanded="false" />
             <element signature="method#numeroE#0;class#simpleExemple#0" expanded="false" />
             <element signature="method#numeroF#0;class#simpleExemple#0" expanded="false" />
-            <element signature="method#numeroG#0;class#simpleExemple#0" expanded="false" />
-            <element signature="e#6855#6863#0" expanded="true" />
-            <element signature="e#6949#6957#0" expanded="true" />
             <element signature="method#numeroH#0;class#simpleExemple#0" expanded="false" />
-            <element signature="e#7965#7973#0" expanded="true" />
             <element signature="method#executeQuery#0;class#simpleExemple#0" expanded="false" />
             <element signature="method#executeQueries#0;class#simpleExemple#0" expanded="false" />
+            <element signature="method#main#0;class#simpleExemple#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/simpleExemple.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="method#importJsonIntoCollection#0;class#simpleExemple#0" expanded="false" />
+            <element signature="method#numeroA#0;class#simpleExemple#0" expanded="false" />
+            <element signature="method#numeroB#0;class#simpleExemple#0" expanded="false" />
+            <element signature="method#numeroC#0;class#simpleExemple#0" expanded="false" />
+            <element signature="method#numeroD#0;class#simpleExemple#0" expanded="false" />
+            <element signature="method#numeroE#0;class#simpleExemple#0" expanded="false" />
+            <element signature="method#numeroF#0;class#simpleExemple#0" expanded="false" />
+            <element signature="method#numeroH#0;class#simpleExemple#0" expanded="false" />
+            <element signature="method#executeQuery#0;class#simpleExemple#0" expanded="false" />
+            <element signature="method#executeQueries#0;class#simpleExemple#0" expanded="false" />
+            <element signature="method#main#0;class#simpleExemple#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -745,25 +781,57 @@
       </provider>
     </entry>
     <entry file="jar://$PROJECT_DIR$/../materiels/drivers/mongodb-driver-3.2.2.jar!/com/mongodb/client/MongoCollection.class" />
+    <entry file="jar://C:/Program Files/Java/jdk1.8.0_60/src.zip!/java/lang/Long.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-10502">
+          <caret line="53" column="19" selection-start-line="53" selection-start-column="19" selection-end-line="53" selection-end-column="19" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://C:/Program Files/Java/jdk1.8.0_60/src.zip!/java/lang/ClassLoader.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="6889">
+          <caret line="487" column="0" selection-start-line="487" selection-start-column="0" selection-end-line="487" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://C:/Program Files/Java/jdk1.8.0_60/jre/lib/rt.jar!/sun/misc/Launcher.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="168">
+          <caret line="181" column="0" selection-start-line="181" selection-start-column="0" selection-end-line="181" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$PROJECT_DIR$/drivers/mongodb-driver-3.2.2.jar!/com/mongodb/FindIterableImpl.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="168">
+          <caret line="124" column="0" selection-start-line="124" selection-start-column="0" selection-end-line="124" selection-end-column="0" />
+          <folding>
+            <element signature="e#4499#4500#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/simpleExemple.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1021">
-          <caret line="189" column="5" selection-start-line="189" selection-start-column="5" selection-end-line="189" selection-end-column="5" />
+        <state relative-caret-position="128">
+          <caret line="166" column="49" selection-start-line="166" selection-start-column="49" selection-end-line="166" selection-end-column="49" />
           <folding>
             <element signature="imports" expanded="true" />
+            <element signature="method#importJsonIntoCollection#0;class#simpleExemple#0" expanded="false" />
             <element signature="method#numeroA#0;class#simpleExemple#0" expanded="false" />
             <element signature="method#numeroB#0;class#simpleExemple#0" expanded="false" />
             <element signature="method#numeroC#0;class#simpleExemple#0" expanded="false" />
             <element signature="method#numeroD#0;class#simpleExemple#0" expanded="false" />
             <element signature="method#numeroE#0;class#simpleExemple#0" expanded="false" />
             <element signature="method#numeroF#0;class#simpleExemple#0" expanded="false" />
-            <element signature="method#numeroG#0;class#simpleExemple#0" expanded="false" />
-            <element signature="e#6855#6863#0" expanded="true" />
-            <element signature="e#6949#6957#0" expanded="true" />
             <element signature="method#numeroH#0;class#simpleExemple#0" expanded="false" />
-            <element signature="e#7965#7973#0" expanded="true" />
             <element signature="method#executeQuery#0;class#simpleExemple#0" expanded="false" />
             <element signature="method#executeQueries#0;class#simpleExemple#0" expanded="false" />
+            <element signature="method#main#0;class#simpleExemple#0" expanded="false" />
           </folding>
         </state>
       </provider>

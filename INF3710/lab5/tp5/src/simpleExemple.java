@@ -44,23 +44,34 @@ public class simpleExemple {
 
     }
 
+    public static MongoClient connection()throws Exception {
+        try {
+            String uri = "mongodb://root:123@ds113678.mlab.com:13678/kevricherinf3710";
+            MongoClientURI clientUri = new MongoClientURI(uri);
+            return new MongoClient(clientUri);
+        }
+        catch (NullPointerException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
     //Implementation de la query a :
     //  a) Afficher la liste de tous les livres publiés depuis 2000 ;
     public static void numeroA(String collection, MongoDatabase db) {
 
         System.out.println("Executing query a)");
         MongoCollection<Document> coll = db.getCollection(collection);
-        BasicDBObject clause1 = new BasicDBObject("year", new BasicDBObject("$gte", 2000));
-        BasicDBObject clause2 = new BasicDBObject("type", "Book");
+        BasicDBObject cond1 = new BasicDBObject("year", new BasicDBObject("$eq", 2015));
+        BasicDBObject cond2 = new BasicDBObject("type", "Book");
         BasicDBList and = new BasicDBList();
-        and.add(clause1);
-        and.add(clause2);
+        and.add(cond1);
+        and.add(cond2);
         BasicDBObject query = new BasicDBObject("$and", and);
         FindIterable<Document> ittr = coll.find(query);
         for (Document d : ittr) {
-            System.out.println("Title : " + d.get("title") + " Type : " + d.get("type") + " Year : " + d.get("year"));
+            System.out.println(d);
         }
-
     }
 
     //Implementation de la query b :
@@ -72,22 +83,19 @@ public class simpleExemple {
         BasicDBObject cond1 = new BasicDBObject("year", new BasicDBObject("$gte", 2013));
         FindIterable<Document> ittr = coll.find(cond1);
         for (Document d : ittr) {
-            if(d.get("pages") != null) {
-                try {
-                    Document p = d.get("pages", Document.class);
-                    int pages = p.getInteger("end") - p.getInteger("start");
-                    System.out.println("Title: " + d.get("title") + " Nombre de pages : " + pages);
-                }
-                catch (Exception e) {
-                    System.out.println("Title: " + d.get("title") + " Nombre de pages : Inconnu de l'homme jusqu'à maintenant");
-                }
+            try {
+                Document p = d.get("pages", Document.class);
+                int pages = p.getInteger("end") - p.getInteger("start");
+                System.out.println("Title: " + d.get("title") + " Nombre de pages : " + pages);
+            }
+            catch (Exception e) {
+                System.out.println("Title: " + d.get("title") +  " Nombre de pages : Inconnu de l'homme jusqu'à maintenant");
             }
         }
-
     }
 
     //Implementation de la query c :
-    //  c) Afficher la liste de tous les éditeurs (type ?publisher?) distincts ;
+    //  c) Afficher la liste de tous les éditeurs (type "publisher") distincts ;
     public static void numeroC(String collection, MongoDatabase db) {
 
         System.out.println("Executing query c)");
@@ -100,7 +108,7 @@ public class simpleExemple {
     }
 
     //Implementation de la query d :
-    //  d) Trier les publications de ?Ingrid Zukerman? ordonnés selon la date (le plus récent d?abord) ;
+    //  d) Trier les publications de Ingrid Zukerman ordonnés selon la date (le plus récent d'abord) ;
     public static void numeroD(String collection, MongoDatabase db) {
 
         System.out.println("Executing query d)");
@@ -110,13 +118,13 @@ public class simpleExemple {
         FindIterable<Document> ittr = coll.find(cond, Document.class);
         ittr.sort(Sorts.orderBy(Sorts.descending("year")));
         for (Document d : ittr) {
-            System.out.println(d.get("year") + ", " + d.get("title") + " "+ d.get("authors"));
+            System.out.println(d.get("year") + ", " + d.get("title") + " " + d.get("authors"));
         }
 
     }
 
     //Implementation de la query e :
-    //  e) Compter le nombre d?articles de ?Ingrid Zukerman? ;
+    //  e) Compter le nombre d'articles de "Ingrid Zukerman" ;
     public static void numeroE(String collection, MongoDatabase db){
 
         System.out.println("Executing query e)");
@@ -132,7 +140,7 @@ public class simpleExemple {
     }
 
     //Implementation de la query f :
-    //  f) Afficher les publications dont Ingrid Zuckerman et Fabian Bohnert sont les deux seuls auteurs ;
+    //  f) Afficher les publications dont "Ingrid Zuckerman" et "Fabian Bohnert" sont les deux seuls auteurs ;
     public static void numeroF(String collection, MongoDatabase db){
 
         System.out.println("Executing query f)");
@@ -155,6 +163,7 @@ public class simpleExemple {
     //  g) Insérer un livre fictif dont vous êtes l'auteur unique ;
     public static void numeroG(String collection, MongoDatabase db){
 
+
         System.out.println("Executing query g)");
         MongoCollection<Document> coll = db.getCollection(collection);
         List<String> authors = new ArrayList<String>();
@@ -162,34 +171,39 @@ public class simpleExemple {
         List<String> isbn = new ArrayList<String>();
         isbn.add("000-1-234-42429-3");
         Document doc = new Document();
-        doc.append("_id", "series/pantech/000001");
+        doc.append("_id", "series/pantech/000042");
         doc.append("type", "Book");
-        doc.append("editor", "Richer Archambault");
-        doc.append("title", "JPMP - J'ai perdu mon papa");
+        doc.append("volume", 42);
+        doc.append("pages", new Document("start", 1).append("end" , 123));
+        doc.append("title", "J'ai Perdu Mon Papa");
         doc.append("year", "2015");
         doc.append("publisher", "CoopPoly");
-        doc.append("series", "Survivre après le départ de ses parents");
-        doc.append("booktitle", "JPMP");
-        doc.append("url", "db/series/pantech/000002.html");
+        doc.append("series", "Survivre Après le Départ de ses Parents");
         doc.append("authors", authors);
         doc.append("isbn", isbn);
         coll.insertOne(doc);//Insertion dans la BD
+
+
+        BasicDBObject query = new BasicDBObject("_id", "series/pantech/000042");
+        FindIterable<Document> ittr = coll.find(query);
+        System.out.println(ittr.first());
     }
 
     //Implementation de la query h :
-    //  g) Insérer un livre fictif dont vous êtes l'auteur unique ;
+    //  h) Modifier ce livre en ajoutant un second auteur, par exemple celui de votre coéquipier;
     public static void numeroH(String collection, MongoDatabase db){
 
         System.out.println("Executing query h)");
         MongoCollection<Document> coll = db.getCollection(collection);
-        List<String> authors = new ArrayList<String>();
-        authors.add("Kevin Pantelakis");
-        authors.add("Richer Archambault");
-        BasicDBObject doc1 = new BasicDBObject("_id", "series/pantech/000001");
-        coll.updateOne(doc1, new Document("$set", new Document("authors", authors)));
+        BasicDBObject doc1 = new BasicDBObject("_id", "series/pantech/000042");
+        coll.updateOne(doc1, new Document("$addToSet", new Document("authors", "Richer Archambault")));
+
+        BasicDBObject query = new BasicDBObject("_id", "series/pantech/000042");
+        FindIterable<Document> ittr = coll.find(query);
+        System.out.println(ittr.first());
     }
 
-    //Insert query number (a,b,c,d,e,f) to execute the query on a collection of a Mongo Database
+    // Insert query number (a,b,c,d,e,f) to execute the query on a collection of a Mongo Database
     public static void executeQuery(char queryNum, String collection, MongoDatabase db ){
         switch (queryNum){
             case 'a':
@@ -239,37 +253,28 @@ public class simpleExemple {
         numeroF(collection, db);
         numeroG(collection, db);
         numeroH(collection, db);
-
-    }
-
-    public static void connection(String dbname) {
-        try {
-            String uri = "mongodb://root:123@ds113678.mlab.com:13678/kevricherinf3710";
-            String collection = "dblpv2";
-
-            MongoClientURI clientUri = new MongoClientURI(uri);
-            MongoClient client = new MongoClient(clientUri);
-            MongoDatabase db = client.getDatabase(dbname);
-
-            // uncomment this line to populate de collection.
-            // importJsonIntoCollection("/Users/richerarc/git/poly/turbo-giggle/INF3710/lab5/materiels/dblp.json", collection, db);
-            
-            // Uncomment this line to execute desired query
-            //executeQuery('h',collection,db);
-
-            // uncomment this line to execute the queries  a) to f)
-            executeQueries(collection,db);
-
-            client.close();
-        }
-        catch (NullPointerException e) {
-            e.printStackTrace();
-        }
-
     }
 
     public static void main(String[] args) throws UnknownHostException {
-        // TODO Auto-generated method stub
-        connection("kevricherinf3710");
+        try {
+            MongoClient client = connection();
+            MongoDatabase db = client.getDatabase("kevricherinf3710");
+            String collection = "dblpv2";
+
+            // uncomment this line to populate de collection with a JSON document.
+            // importJsonIntoCollection("INSERT JSON FILE PATH", collection, db);
+
+            // Uncomment this line to execute desired query
+            executeQuery('h',collection,db);
+
+            // uncomment this line to execute the queries  a) to h)
+            //executeQueries(collection,db);
+
+            client.close();
+        }
+        catch(Exception e){
+            e.printStackTrace();
+        }
     }
 }
+
