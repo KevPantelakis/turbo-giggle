@@ -1,2 +1,2 @@
 # turbo-giggle
-Labo de l'automne 2016 a la Poly
+Labo et TP de Polytechnique par Richer Archambault et Kevin Pantelakis
