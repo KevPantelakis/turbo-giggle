@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+ 	<head>
+    	<title>TD3 Google Map</title>
+    	<meta name="viewport" content="initial-scale=1.0">
+    	<meta charset="utf-8">
+		<!-- Ceci permet d'inclure les fichiers CSS -->
+		<link href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" rel="stylesheet">
+		<link href="styles.css" rel="stylesheet" type="text/css">
+  	</head>
+  	<body>
+
+		<div id="research">
+			<h1 class="text-centered anglais">AWESOME CITY FINDER!</h1><h1 class="text-centered francais">SÉLECTEUR DE VILLE FANTASTIQUE!</h1>
+            <button id="toggle-fr">Francais</button><button id="toggle-en">English</button>
+            <p class="anglais">Enter a city name or enter latitude, longitude</p><p class="francais">Entrez le nom d'une ville ou entrez  longitute, latitude</p>
+			<input id="autocomplete" placeholder="Enter a city name" class="anglais" type="text"><input id="autocomplete" placeholder="Entrez un nom de ville" class="francais"><button class="anglais" id="latlng">Go!</button><button id="latlng" class="francais">Aller!</button>
+			<div id="slider-container">
+                <p class="anglais">Zoom factor: <span class="slider-val"></span></p>
+                <p class="francais">Facteur de zoom: <span class="slider-val"></span></p>
+                <div id="slider"></div>
+            </div>
+            <div id="status" class="anglais">
+            </div>
+            <div id="statusfr" class="francais">
+            </div>
+		</div>
+    		<div id="map"></div>
+		<!-- Ceci permet d'inclure les fichiers JavaScript de jQuery, jQuery UI, Google Maps ainsi que map.js | mit en bas du body pour empêcher le loading de bloquer -->
+		<script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+		<script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+    	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCjonwWBWoE1W6L8sU7KPl7zkRLSaPNC2o&amp"></script>
+		<script src="map.js"></script>
+  	</body>
+</html>
