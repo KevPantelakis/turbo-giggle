@@ -1,0 +1,65 @@
+html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+}
+
+body {
+	font-family: sans-serif;
+	font-size: 14px;
+	line-height: 1.6em;
+	margin: 0;
+	padding: 0;
+}
+
+.slider-val{
+	border:0;
+	color:#f6931f;
+	font-weight:bold;
+}
+
+.text-centered {
+	text-align:center;
+}
+
+.francais{
+	display:none;
+}
+
+#map {
+	width: 100%;
+    height: calc(100vh - 245px);
+	position: relative5
+
+	box-shadow: 0 0 3px #000000;
+}
+
+
+#research{
+	width: 96%;
+	height: 180px;
+    max-height: 180px;
+	margin-left: 2%;
+	margin-right: 2%;
+}
+
+#toggle-fr, #toggle-en{
+  	float: right;
+}
+
+#slider{
+	width:200px;
+}
+
+#slider-container, #status, #statusfr{
+    width: 50vw;
+}
+
+#status, #statusfr{
+    float: right;
+	margin-bottom: 20px;
+	position: relative;
+	height:40px;
+	width: 850px;
+}
