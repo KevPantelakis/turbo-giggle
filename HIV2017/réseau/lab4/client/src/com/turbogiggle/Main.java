@@ -16,15 +16,15 @@ public class Main {
         String ip = stdin.nextLine();
 
         stdout.println("Entrez votre numéro de port (entre 10000 et 10050) :");
-        String port = stdin.nextLine();
-        while( Long.parseLong(port) < 10000 || Long.parseLong(port) > 10050) {
+        Integer port = Integer.parseInt(stdin.nextLine());
+        while( port < 10000 || port > 10050) {
             stdout.println("Mauvais numéro de port");
             stdout.println("Entrez votre numéro de port (entre 10000 et 10050) :");
-            port = stdin.nextLine();
+            port = Integer.parseInt(stdin.nextLine());
         }
 
         stdout.println("Entrez le temps de sondage :");
-        Double time = Double.parseDouble(stdin.nextLine());
+        Integer time = Integer.parseInt(stdin.nextLine());
 
         server = new Server(ip, port, time);
 
