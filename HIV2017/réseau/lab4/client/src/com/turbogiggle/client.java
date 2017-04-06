@@ -3,8 +3,8 @@ import java.net.*;
 import java.io.*;
 
 public class Client {
-    String serverIpAdress;
-    Integer serverPort;
+    private String serverIpAdress;
+    private Integer serverPort;
 
 
     Client(String ip, Integer port){
