@@ -84,7 +84,6 @@ class Server {
             }
         }
     }
-
     private void pollFinished(){
         this.pollTimeElapsed = true;
         System.out.println("Sondage terminé");
@@ -114,6 +113,8 @@ class Server {
                     outputStream.writeUTF("Merci pour votre réponse!");
                     //this.answers.add(inputStream.readUTF());
                     System.out.println(socket.getRemoteSocketAddress().toString() + " : " + socket.getPort() + " - " + inputStream.readUTF());
+
+                    // Écrire la réponse dans un Fichier Texte.
                     try(FileWriter fileWriter = new FileWriter("/test.txt", true);
                         BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
                         PrintWriter out = new PrintWriter(bufferedWriter))
@@ -133,3 +134,4 @@ class Server {
     }
 
 }
+//132.207.221.221
