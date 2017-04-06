@@ -37,7 +37,6 @@ class Server {
 
     void stop() {
         this.serverRunning = false;
-
         try {
             serverSocket.close();
         } catch (IOException e) {
@@ -46,9 +45,7 @@ class Server {
     }
 
     void ask(String question) {
-
         this.currentQuestion = question;
-
         this.pollTimeElapsed = false;
 
         System.out.println("Début du sondage");
@@ -90,7 +87,6 @@ class Server {
 
     private void pollFinished(){
         this.pollTimeElapsed = true;
-
         System.out.println("Sondage terminé");
     }
 
@@ -116,10 +112,18 @@ class Server {
                     outputStream.writeUTF("Votre réponse ne sera pas prise en compte");
                 } else {
                     outputStream.writeUTF("Merci pour votre réponse!");
-                    this.answers.add(inputStream.readUTF());
+                    //this.answers.add(inputStream.readUTF());
+                    System.out.println(socket.getRemoteSocketAddress().toString() + " : " + socket.getPort() + " - " + inputStream.readUTF());
+                    try(FileWriter fileWriter = new FileWriter("/test.txt", true);
+                        BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
+                        PrintWriter out = new PrintWriter(bufferedWriter))
+                    {
+                        out.println("the text");
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
                 }
             }
-
             socket.close();
         }catch(SocketTimeoutException s) {
             System.out.println("Socket for addr" + socket.getInetAddress().toString() +  "timed out!");
