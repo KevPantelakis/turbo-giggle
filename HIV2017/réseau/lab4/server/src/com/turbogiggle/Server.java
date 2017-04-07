@@ -77,6 +77,7 @@ class Server {
                 break;
             }catch(SocketException e) {
                 System.out.println("Écoute intérompu");
+                System.out.println(e.getMessage());
                 break;
             }catch(IOException e) {
                 e.printStackTrace();
