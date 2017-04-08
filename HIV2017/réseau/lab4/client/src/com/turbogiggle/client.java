@@ -1,6 +1,7 @@
 package com.turbogiggle;
 import java.net.*;
 import java.io.*;
+import java.util.Scanner;
 
 public class Client {
     private String serverIpAdress;
@@ -16,16 +17,23 @@ public class Client {
         Socket socket;
         try {
             socket = new Socket(serverIpAdress, serverPort);
-            BufferedReader buffReader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-            PrintWriter out = new PrintWriter(socket.getOutputStream());
 
-            System.out.println("La question demandée est: " + buffReader.readLine());
+            DataOutputStream outputStream = new DataOutputStream(socket.getOutputStream());
+            DataInputStream inputStream = new DataInputStream(socket.getInputStream());
 
-            System.out.println("Inscrivez votre réponse: ");
-            BufferedReader userInputBR = new BufferedReader(new InputStreamReader(System.in));
-            String userInput = userInputBR.readLine();
+            System.out.println("SERVEUR : " + inputStream.readUTF());
 
-            out.println(userInput);
+            Boolean pollTimeEllapsed = inputStream.readBoolean();
+
+            System.out.println("SERVEUR : " + inputStream.readUTF());
+
+            if (!pollTimeEllapsed) {
+                System.out.println("Inscrivez votre réponse: ");
+                Scanner stdin = new Scanner(System.in);
+                String userInput = stdin.nextLine();
+                outputStream.writeUTF(userInput);
+                System.out.println("SERVEUR : " + inputStream.readUTF());
+            }
 
             socket.close();
 

@@ -16,14 +16,13 @@ public class Main {
 
         stdout.println("Entrex le numero de port : ");
         Integer port = Integer.parseInt(stdin.nextLine());
-        while( port < 10000 || port > 10050) {
-            stdout.println("Mauvais numéro de port");
-            stdout.println("Entrez votre numéro de port (entre 10000 et 10050) :");
-            port = Integer.parseInt(stdin.nextLine());
-        }
+//        while( port < 10000 || port > 10050) {
+//            stdout.println("Mauvais numéro de port");
+//            stdout.println("Entrez votre numéro de port (entre 10000 et 10050) :");
+//            port = Integer.parseInt(stdin.nextLine());
+//        }
 
         client =  new Client(ip, port);
         client.connectToServer();
     }
 }
-//132.207.221.221

@@ -18,11 +18,11 @@ public class Main {
 
         stdout.println("Entrez votre numéro de port (entre 10000 et 10050) :");
         Integer port = Integer.parseInt(stdin.nextLine());
-        while( port < 10000 || port > 10050) {
-            stdout.println("Mauvais numéro de port");
-            stdout.println("Entrez votre numéro de port (entre 10000 et 10050) :");
-            port = Integer.parseInt(stdin.nextLine());
-        }
+//        while( port < 10000 || port > 10050) {
+//            stdout.println("Mauvais numéro de port");
+//            stdout.println("Entrez votre numéro de port (entre 10000 et 10050) :");
+//            port = Integer.parseInt(stdin.nextLine());
+//        }
 
         stdout.println("Entrez le temps de sondage :");
         Integer time = Integer.parseInt(stdin.nextLine());
