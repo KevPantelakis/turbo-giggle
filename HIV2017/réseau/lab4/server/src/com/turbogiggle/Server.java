@@ -8,6 +8,7 @@ import java.util.concurrent.TimeUnit;
 //TODO Write text file w\ answer | when poll is over, show question w/ received answers.
 
 class Server {
+    public static final String TEXTFILEPATH = System.getProperty("user.dir")+ "\\src\\test.txt";
     private Integer pollTimeOut;
     private Boolean pollTimeElapsed;
     private Boolean serverRunning;
@@ -34,7 +35,7 @@ class Server {
         Thread mainServerThread = new Thread(this::checkForClient);
         mainServerThread.start();
     }
-
+    //192.168.0.113
     void stop() {
         this.serverRunning = false;
         try {
@@ -114,11 +115,14 @@ class Server {
                     System.out.println(socket.getRemoteSocketAddress().toString() + " : " + socket.getPort() + " - " + inputStream.readUTF());
 
                     // Écrire la réponse dans un Fichier Texte.
-                    try(FileWriter fileWriter = new FileWriter("/test.txt", true);
-                        BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
-                        PrintWriter out = new PrintWriter(bufferedWriter))
-                    {
-                        out.println("the text");
+                    try {
+                        Writer out = new BufferedWriter(new OutputStreamWriter(
+                                new FileOutputStream(TEXTFILEPATH), "UTF-8"));
+                        try {
+                            out.write(socket.getRemoteSocketAddress().toString() + " : " + socket.getPort() + " - " + inputStream.readUTF() + "\n");
+                        } finally {
+                            out.close();
+                        }
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
