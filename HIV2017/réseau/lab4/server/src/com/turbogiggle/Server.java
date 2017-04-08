@@ -4,8 +4,6 @@ import java.net.*;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 class Server {
@@ -32,7 +30,7 @@ class Server {
         Thread mainServerThread = new Thread(this::checkForClient);
         mainServerThread.start();
     }
-    //192.168.0.113
+
     void stop() {
         this.serverRunning = false;
         try {
@@ -112,19 +110,12 @@ class Server {
                 outputStream.writeUTF("Le temps alloué pour répondre est écoulé.");
             } else {
                 outputStream.writeUTF("Question : " + this.currentQuestion);
+                outputStream.writeUTF("Merci pour votre réponse!");
 
-                if (this.pollTimeElapsed) {
-                    outputStream.writeUTF("Le temps alloué pour répondre est écoulé.\nVotre réponse ne sera pas prise en compte");
-                } else {
-                    outputStream.writeUTF("Merci pour votre réponse!");
+                String clientAnswer = "CLIENT -> " + socket.getRemoteSocketAddress().toString() + " Réponse : " + inputStream.readUTF();
 
-                    String clientAnswer = "CLIENT -> " + socket.getRemoteSocketAddress().toString() + " Réponse : " + inputStream.readUTF();
-
-                    System.out.println(clientAnswer);
-
-                    // Écrire la réponse dans un Fichier Texte.
-                    this.writeInOutputFile("\t" + clientAnswer + "\r\n");
-                }
+                System.out.println(clientAnswer);
+                this.writeInOutputFile("\t" + clientAnswer + "\r\n");
             }
             socket.close();
         }catch(SocketTimeoutException s) {

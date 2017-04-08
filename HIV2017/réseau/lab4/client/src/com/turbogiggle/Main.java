@@ -1,5 +1,4 @@
 package com.turbogiggle;
-
 import java.io.PrintStream;
 import java.util.Scanner;
 
@@ -13,7 +12,7 @@ public class Main {
         stdout.println("Entrez l'adresse ip du serveur : ");
         String ip = stdin.nextLine();
 
-        stdout.println("Entrex le numero de port : ");
+        stdout.println("Entrez le numero de port : ");
         Integer port = Integer.parseInt(stdin.nextLine());
 //        while( port < 10000 || port > 10050) {
 //            stdout.println("Mauvais numéro de port");
