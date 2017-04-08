@@ -87,6 +87,8 @@ class Server {
 
     public void writeInOutputFile(String str){
         try {
+            File reponses = new File(TEXTFILEPATH);
+            reponses.createNewFile();
             Files.write(Paths.get(TEXTFILEPATH), str.getBytes(), StandardOpenOption.APPEND);
         }catch (IOException e) {
             e.printStackTrace();
