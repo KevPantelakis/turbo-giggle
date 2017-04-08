@@ -8,8 +8,6 @@ import java.util.concurrent.TimeUnit;
 //TODO Write text file w\ answer | when poll is over, show question w/ received answers.
 
 class Server {
-    private String ipAddress;
-    private Integer port;
     private Integer pollTimeOut;
     private Boolean pollTimeElapsed;
     private Boolean serverRunning;
@@ -19,9 +17,11 @@ class Server {
 
     private ServerSocket serverSocket;
 
-    Server(String ip, Integer port, Integer pollTimeOut){
-        this.ipAddress = ip;
-        this.port = port;
+    Server(String ip, Integer port, Integer pollTimeOut) throws IOException {
+
+        InetAddress addr = InetAddress.getByName(ip);
+        this.serverSocket = new ServerSocket(port, 0, addr);
+
         this.pollTimeOut = pollTimeOut;
         this.pollTimeElapsed = true;
 
@@ -61,12 +61,10 @@ class Server {
     }
 
     private void checkForClient(){
+        System.out.println("Démarage de l'écoute sur " + serverSocket.getInetAddress() + ":" + serverSocket.getLocalPort());
+        System.out.println("Attente de client...");
         while (this.serverRunning) {
             try {
-                this.serverSocket = new ServerSocket(this.port);
-                System.out.println("Démarage de l'écoute sur le port " + serverSocket.getLocalPort());
-                System.out.println("Attente de client...");
-
                 Socket client = serverSocket.accept();
 
                 Thread clientHandlerThread = new Thread(() -> handleClient(client));
@@ -77,7 +75,6 @@ class Server {
                 break;
             }catch(SocketException e) {
                 System.out.println("Écoute intérompu");
-                System.out.println(e.getMessage());
                 break;
             }catch(IOException e) {
                 e.printStackTrace();
@@ -85,6 +82,7 @@ class Server {
             }
         }
     }
+
     private void pollFinished(){
         this.pollTimeElapsed = true;
         System.out.println("Sondage terminé");
@@ -135,4 +133,3 @@ class Server {
     }
 
 }
-//132.207.221.221

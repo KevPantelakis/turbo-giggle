@@ -1,5 +1,6 @@
 package com.turbogiggle;
 
+import java.io.IOException;
 import java.io.PrintStream;
 import java.util.Scanner;
 
@@ -26,21 +27,30 @@ public class Main {
         stdout.println("Entrez le temps de sondage :");
         Integer time = Integer.parseInt(stdin.nextLine());
 
-        server = new Server(ip, port, time);
-        server.start();
+        try {
 
-        String question;
+            server = new Server(ip, port, time);
 
-        while(!status.toLowerCase().equals("quitter")) {
-            stdout.println("Entrez votre question :");
-            question = stdin.nextLine();
+            server.start();
 
-            server.ask(question);
+            String question;
 
-            stdout.println("Appuyez sur entrer pour poser une nouvelle question ou entrez \"quitter\" pour quitter :");
-            status = stdin.nextLine();
+            while(!status.toLowerCase().equals("quitter")) {
+                stdout.println("Entrez votre question :");
+                question = stdin.nextLine();
+
+                server.ask(question);
+
+                stdout.println("Appuyez sur entrer pour poser une nouvelle question ou entrez \"quitter\" pour quitter :");
+                status = stdin.nextLine();
+            }
+
+            server.stop();
+
+        } catch (IOException e) {
+            stdout.println("Un problème est survenu lors de la création du serveur. Fin du programme.");
+            e.printStackTrace();
         }
 
-        server.stop();
     }
 }
