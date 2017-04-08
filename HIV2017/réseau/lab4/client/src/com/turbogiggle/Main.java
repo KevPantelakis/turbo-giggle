@@ -6,7 +6,6 @@ import java.util.Scanner;
 public class Main {
 
     public static void main(String[] args) {
-        String status = "";
         Client client;
         Scanner stdin = new Scanner(System.in);
         PrintStream stdout = new PrintStream(System.out);
@@ -24,5 +23,6 @@ public class Main {
 
         client =  new Client(ip, port);
         client.connectToServer();
+        client.handleServer();
     }
 }

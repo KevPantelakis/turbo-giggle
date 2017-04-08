@@ -9,6 +9,7 @@ public class Main {
     public static void main(String[] args) {
         Server server;
         String status = "";
+        int maxQuestionLength = 500;
 
         Scanner stdin = new Scanner(System.in);
         PrintStream stdout = new PrintStream(System.out);
@@ -33,18 +34,27 @@ public class Main {
 
             server.start();
 
-            String question;
+            String question = "";
 
             while(!status.toLowerCase().equals("quitter")) {
-                stdout.println("Entrez votre question :");
-                question = stdin.nextLine();
+                do {
+                    stdout.println("Vous devez saisir une question de moins de 500 caractères.");
+                    stdout.println("Entrez votre question :");
+                    question = stdin.nextLine();
+                } while (question.length() > maxQuestionLength);
 
+                server.writeInOutputFile(question+ "\r\n");
                 server.ask(question);
+
 
                 stdout.println("Appuyez sur entrer pour poser une nouvelle question ou entrez \"quitter\" pour quitter :");
                 status = stdin.nextLine();
+                if(!status.toLowerCase().equals("quitter")) {
+                    server.stop();
+                    server = new Server(ip, port, time);
+                    server.start();
+                }
             }
-
             server.stop();
 
         } catch (IOException e) {

@@ -4,22 +4,21 @@ import java.io.*;
 import java.util.Scanner;
 
 public class Client {
-    private String serverIpAdress;
+    private String serverIpAddress;
     private Integer serverPort;
-
+    private Integer maxAnswerLength;
+    private Socket clientSocket;
 
     Client(String ip, Integer port){
-        this.serverIpAdress = ip;
+        this.serverIpAddress = ip;
         this.serverPort = port;
+        maxAnswerLength = 200;
     }
 
-    void connectToServer(){
-        Socket socket;
+    void handleServer(){
         try {
-            socket = new Socket(serverIpAdress, serverPort);
-
-            DataOutputStream outputStream = new DataOutputStream(socket.getOutputStream());
-            DataInputStream inputStream = new DataInputStream(socket.getInputStream());
+            DataOutputStream outputStream = new DataOutputStream(clientSocket.getOutputStream());
+            DataInputStream inputStream = new DataInputStream(clientSocket.getInputStream());
 
             System.out.println("SERVEUR : " + inputStream.readUTF());
 
@@ -28,15 +27,28 @@ public class Client {
             System.out.println("SERVEUR : " + inputStream.readUTF());
 
             if (!pollTimeEllapsed) {
-                System.out.println("Inscrivez votre réponse: ");
                 Scanner stdin = new Scanner(System.in);
-                String userInput = stdin.nextLine();
+                String userInput;
+
+                do {
+                    System.out.println("Vous devez saisir une réponse de moins de 200 caractères");
+                    System.out.println("Inscrivez votre réponse: ");
+                    userInput = stdin.nextLine();
+                } while (userInput.length() > maxAnswerLength);
+
                 outputStream.writeUTF(userInput);
                 System.out.println("SERVEUR : " + inputStream.readUTF());
+
+                clientSocket.close();
             }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
-            socket.close();
-
+    void connectToServer(){
+        try {
+            clientSocket = new Socket(serverIpAddress, serverPort);
         } catch (IOException e){
             e.printStackTrace();
         }

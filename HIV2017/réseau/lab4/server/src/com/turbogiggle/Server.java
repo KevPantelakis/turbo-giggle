@@ -1,12 +1,15 @@
 package com.turbogiggle;
 import java.io.*;
 import java.net.*;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 class Server {
-    public static final String TEXTFILEPATH = System.getProperty("user.dir")+ "\\src\\test.txt";
+    public static final String TEXTFILEPATH = System.getProperty("user.dir")+ "\\src\\reponses.txt";
     private Integer pollTimeOut;
     private Boolean pollTimeElapsed;
     private Boolean serverRunning;
@@ -84,6 +87,14 @@ class Server {
 
     }
 
+    public void writeInOutputFile(String str){
+        try {
+            Files.write(Paths.get(TEXTFILEPATH), str.getBytes(), StandardOpenOption.APPEND);
+        }catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     public void handleClient (Socket socket) {
         try {
 
@@ -96,7 +107,7 @@ class Server {
             outputStream.writeBoolean(this.pollTimeElapsed);
 
             if (this.currentQuestion == null) {
-                outputStream.writeUTF("Aucune question pour l'instant, veillez réessayer plus tard");
+                outputStream.writeUTF("Aucune question disponible pour l'instant, veillez réessayer plus tard.");
             } else if (this.pollTimeElapsed) {
                 outputStream.writeUTF("Le temps alloué pour répondre est écoulé.");
             } else {
@@ -107,22 +118,12 @@ class Server {
                 } else {
                     outputStream.writeUTF("Merci pour votre réponse!");
 
-                    String clientAnswer = "CLIENT -> " + socket.getRemoteSocketAddress().toString() + ":" + socket.getPort() + " Réponse : " + inputStream.readUTF();
+                    String clientAnswer = "CLIENT -> " + socket.getRemoteSocketAddress().toString() + " Réponse : " + inputStream.readUTF();
 
                     System.out.println(clientAnswer);
 
                     // Écrire la réponse dans un Fichier Texte.
-                    try {
-                        Writer out = new BufferedWriter(new OutputStreamWriter(
-                                new FileOutputStream(TEXTFILEPATH), "UTF-8"));
-                        try {
-                            out.write(clientAnswer);
-                        } finally {
-                            out.close();
-                        }
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
+                    this.writeInOutputFile("\t" + clientAnswer + "\r\n");
                 }
             }
             socket.close();
