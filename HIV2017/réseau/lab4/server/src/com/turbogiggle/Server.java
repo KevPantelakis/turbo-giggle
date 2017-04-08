@@ -6,13 +6,11 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 class Server {
+    public static final String TEXTFILEPATH = System.getProperty("user.dir")+ "\\src\\test.txt";
     private Integer pollTimeOut;
     private Boolean pollTimeElapsed;
     private Boolean serverRunning;
-
     private String currentQuestion;
-    private List<String> answers;
-
     private ServerSocket serverSocket;
 
     Server(String ip, Integer port, Integer pollTimeOut) throws IOException {
@@ -22,9 +20,6 @@ class Server {
 
         this.pollTimeOut = pollTimeOut;
         this.pollTimeElapsed = true;
-
-        this.answers = new ArrayList<>();
-
         this.currentQuestion = null;
     }
 
@@ -34,7 +29,7 @@ class Server {
         Thread mainServerThread = new Thread(this::checkForClient);
         mainServerThread.start();
     }
-
+    //192.168.0.113
     void stop() {
         this.serverRunning = false;
         try {
@@ -85,10 +80,8 @@ class Server {
     private void pollFinished(){
         this.pollTimeElapsed = true;
         System.out.println("Sondage terminé");
-        System.out.println("Le réponses reçu sont:");
-        for (int i = 0; i < this.answers.size(); i++) {
-            System.out.println(answers.get(i));
-        }
+        System.out.println("Le réponses reçu ont été écrite sur le disque");
+
     }
 
     public void handleClient (Socket socket) {
@@ -113,7 +106,23 @@ class Server {
                     outputStream.writeUTF("Le temps alloué pour répondre est écoulé.\nVotre réponse ne sera pas prise en compte");
                 } else {
                     outputStream.writeUTF("Merci pour votre réponse!");
-                    this.answers.add("CLIENT -> " + socket.getRemoteSocketAddress().toString() + ":" + socket.getPort() + " Réponse : " + inputStream.readUTF());
+
+                    String clientAnswer = "CLIENT -> " + socket.getRemoteSocketAddress().toString() + ":" + socket.getPort() + " Réponse : " + inputStream.readUTF();
+
+                    System.out.println(clientAnswer);
+
+                    // Écrire la réponse dans un Fichier Texte.
+                    try {
+                        Writer out = new BufferedWriter(new OutputStreamWriter(
+                                new FileOutputStream(TEXTFILEPATH), "UTF-8"));
+                        try {
+                            out.write(clientAnswer);
+                        } finally {
+                            out.close();
+                        }
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
                 }
             }
             socket.close();
