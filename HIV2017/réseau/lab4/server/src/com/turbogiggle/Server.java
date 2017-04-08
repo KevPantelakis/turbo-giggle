@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 class Server {
-    public static final String TEXTFILEPATH = System.getProperty("user.dir")+ "\\src\\reponses.txt";
+    public static final String TEXTFILEPATH = System.getProperty("user.dir")+ "/src/reponses.txt";
     private Integer pollTimeOut;
     private Boolean pollTimeElapsed;
     private Boolean serverRunning;
